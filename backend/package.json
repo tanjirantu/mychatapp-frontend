@@ -1,0 +1,47 @@
+{
+	"name": "likho-api-v1",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.ts",
+	"scripts": {
+		"dev": "nodemon -e ts --exec \"npm run buildrun\"",
+		"build": "tsc",
+		"start:dev": "npm i && npm run build && npm run dev",
+		"buildrun": "npm run build && node ./build/index.js",
+		"start": "node ./build/index.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@hapi/hapi": "^20.2.1",
+		"async-redis": "^2.0.0",
+		"axios": "^0.24.0",
+		"babel": "^6.23.0",
+		"babel-core": "^6.26.3",
+		"babel-preset-es2015": "^6.24.1",
+		"bcrypt": "^5.0.1",
+		"dotenv": "^10.0.0",
+		"hapi-auth-jwt2": "^10.2.0",
+		"hapi-redis2": "^3.0.1",
+		"ioredis": "^4.28.2",
+		"joi": "^17.5.0",
+		"jsonwebtoken": "^8.5.1",
+		"mongoose": "^6.0.14",
+		"twilio": "^3.81.0",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"@types/bcrypt": "^5.0.0",
+		"@types/hapi__hapi": "^20.0.9",
+		"@types/hapi__jwt": "^2.0.1",
+		"@types/ioredis": "^4.28.7",
+		"@types/jsonwebtoken": "^8.5.6",
+		"@types/node": "^16.11.11",
+		"@types/uuid": "^8.3.3",
+		"babel-plugin-transform-object-rest-spread": "^6.26.0",
+		"eslint-plugin-prettier": "4.0.0",
+		"eslint-plugin-unused-imports": "^2.0.0",
+		"prettier": "2.5.1",
+		"typescript": "^4.5.2"
+	}
+}
