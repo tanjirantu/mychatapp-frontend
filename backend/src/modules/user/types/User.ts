@@ -1,7 +1,5 @@
 type User = {
 	uid: string;
-	otpResetToken: string;
-	otpResetExpires: Date;
 	deviceUuid: string;
 	meta: {
 		firstName: string;
