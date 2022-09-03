@@ -17,13 +17,18 @@ export default async (request: Request, h: ResponseToolkit) => {
 		});
 
 		if (isUserVerified) {
-			const user = await UserModel.findOneAndUpdate({
-				deviceUuid: payload.deviceUuid,
-				"contact.phone": payload.phone,
-				isDeleted: false,
-				lastLoginTime: new Date(),
-				isLoggedIn: true,
-			});
+			const user = await UserModel.findOneAndUpdate(
+				{
+					deviceUuid: payload.deviceUuid,
+					"contact.phone": payload.phone,
+					isDeleted: false,
+					lastLoginTime: new Date(),
+					isLoggedIn: true,
+				},
+				{
+					new: true,
+				}
+			);
 
 			if (user) {
 				const token: any = await generateToken({
