@@ -2,10 +2,10 @@ import Joi from "joi";
 
 const getMessages = {
 	params: {
-		text: Joi.string(),
+		roomUid: Joi.string(),
 	},
 	query: {
-		roomUid: Joi.string(),
+		text: Joi.string(),
 	},
 };
 
