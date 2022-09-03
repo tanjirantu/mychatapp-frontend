@@ -1,0 +1,26 @@
+.container {
+    h3 {
+        color: #2a2a2e;
+    }
+    .circle {
+        height: 18px;
+        width: 18px;
+        border: solid 2px #c1c1c7;
+        background-color: #f1f3f4;
+        svg {
+            width: 14px;
+            width: 14px;
+        }
+    }
+}
+
+.inactive {
+    border: 1px solid #e8e8e8;
+}
+.active {
+    border: 2px solid #01896a;
+    .circle {
+        border: solid 2px #01896a;
+        background-color: #01896a;
+    }
+}

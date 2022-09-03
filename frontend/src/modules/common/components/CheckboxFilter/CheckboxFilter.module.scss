@@ -1,0 +1,28 @@
+.root {
+    .dropdown {
+        border-radius: 4px;
+        box-shadow: 0 20px 30px 0 rgba(0, 0, 0, 0.16);
+        top: calc(100% + 10px);
+        min-width: 300px;
+        .list {
+            &:not(:first-child) {
+                margin-top: 30px;
+            }
+            .label {
+                margin-bottom: 10px;
+                font-size: 16px;
+                font-weight: 500;
+                font-stretch: normal;
+                font-style: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                text-align: left;
+                color: #63636a;
+            }
+            .label .listItem {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}

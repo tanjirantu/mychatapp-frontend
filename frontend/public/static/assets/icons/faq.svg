@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.316" height="20.316">
+    <defs>
+        <style>
+            .cls-2{stroke:#ffffff;fill:#ffffff;stroke-width:.5px}
+        </style>
+    </defs>
+    <g id="Group_638" data-name="Group 638" transform="translate(-1677.977 -48)">
+        <g id="Iconly_Light_Chat" data-name="Iconly/Light/Chat" transform="translate(1679.146 49)">
+            <g id="Chat">
+                <path id="Stroke_4" data-name="Stroke 4" d="M15.489 15.488A9.079 9.079 0 0 1 5.25 17.306a3.673 3.673 0 0 0-1.289-.361C2.884 16.952 1.544 18 .847 17.3s.348-2.038.348-3.122A3.624 3.624 0 0 0 .84 12.9a9.075 9.075 0 1 1 14.649 2.593z" style="stroke:#ffffff;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:2px"/>
+            </g>
+        </g>
+        <g id="question" transform="translate(1684.444 52.629)">
+            <path id="Path_425" data-name="Path 425" class="cls-2" d="M236.344 363.506a.838.838 0 1 1-.838-.838.838.838 0 0 1 .838.838zm0 0" transform="translate(-231.944 -352.831)"/>
+            <path id="Path_427" data-name="Path 427" class="cls-2" d="M168.9 94.114a.629.629 0 0 1-.629-.629l-.008-.619a1.89 1.89 0 0 1 1.259-1.778 2.6 2.6 0 0 0 1.675-2.194 2.3 2.3 0 1 0-4.609 0 .629.629 0 1 1-1.257 0 3.562 3.562 0 1 1 7.124 0 3.856 3.856 0 0 1-2.513 3.38.629.629 0 0 0-.42.593l.008.618a.629.629 0 0 1-.63.629zm0 0" transform="translate(-165.332 -85.332)"/>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26.85" height="22.035">
+    <defs>
+        <style>
+            .cls-3{fill:#01896a}
+        </style>
+    </defs>
+    <g id="Group_633" data-name="Group 633" transform="translate(-19 -294.078)">
+        <path id="Path_584" data-name="Path 584" d="m26.318 132.9-3.564-3.564A7.992 7.992 0 0 0 17.1 127H9.748c-2.12 0-3.509.2-5.007 1.7l-4.208 4.2a1.816 1.816 0 0 0 0 2.569l2.274 2.274a1.816 1.816 0 0 0 2.569 0l.424-.424v7.351a4.36 4.36 0 0 0 4.359 4.359h6.534a4.36 4.36 0 0 0 4.359-4.359v-7.351l.424.424a1.816 1.816 0 0 0 2.569 0l2.274-2.274a1.817 1.817 0 0 0-.001-2.569z" transform="translate(18.999 167.08)" style="fill:#27a88b"/>
+        <path id="Path_585" data-name="Path 585" d="M9.748 127c-2.12 0-3.509.2-5.007 1.7l-4.209 4.2a1.816 1.816 0 0 0 0 2.569l2.274 2.274a1.816 1.816 0 0 0 2.569 0l.424-.424v7.351a4.36 4.36 0 0 0 4.359 4.359h2.726a6.661 6.661 0 0 1-1.849-4.605v-8.88a4.729 4.729 0 0 1 2.39-4.11V127z" transform="translate(18.999 167.08)" style="fill:#099d7b"/>
+        <path id="Intersection_3" data-name="Intersection 3" class="cls-3" d="M2.486 3.4 1 2.088C.69 1.817-.192.917.038.066V.06C.506.013 1.01 0 1.562 0h7.356a7.984 7.984 0 0 1 1.3.106 2.2 2.2 0 0 1-.738 1.982L8 3.4a4.165 4.165 0 0 1-5.509 0z" transform="translate(27.184 294.078)"/>
+        <rect id="Rectangle_403" data-name="Rectangle 403" class="cls-3" width="2" height="3" rx="1" transform="translate(32.29 302.176)"/>
+        <rect id="Rectangle_404" data-name="Rectangle 404" class="cls-3" width="2" height="3" rx="1" transform="translate(32.29 309.332)"/>
+    </g>
+</svg>

@@ -1,0 +1,20 @@
+.tab {
+    height: 32px;
+    border-radius: 20px;
+    box-shadow: 0 1px 0 0 #009d79, inset 0 1px 0 0 #006c53;
+    background-color: #00775c;
+    padding: 2px;
+    .item {
+        border-radius: 20px;
+        color: white;
+        opacity: 0.6;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 0px 15px;
+    }
+    .item_active {
+        background-color: #009372;
+        box-shadow: 0 1px 0 0 #006c53;
+        opacity: 1;
+    }
+}

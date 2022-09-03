@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.523" height="20">
+    <defs>
+        <style>
+            .cls-1{fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="Iconly_Two-tone_Logout" data-name="Iconly/Two-tone/Logout" transform="translate(1 1)">
+        <g id="Logout">
+            <path id="Stroke_1" data-name="Stroke 1" class="cls-1" d="M11.913 4.493v-.908A3.586 3.586 0 0 0 8.328 0H3.584A3.585 3.585 0 0 0 0 3.585v10.83A3.585 3.585 0 0 0 3.584 18h4.753a3.576 3.576 0 0 0 3.576-3.575v-.918"/>
+            <path id="Stroke_3" data-name="Stroke 3" class="cls-1" d="M11.716.5H0" transform="translate(6.807 8.5)"/>
+            <path id="Stroke_5" data-name="Stroke 5" class="cls-1" d="m0 0 2.849 2.836L0 5.673" transform="translate(15.674 6.164)"/>
+        </g>
+    </g>
+</svg>

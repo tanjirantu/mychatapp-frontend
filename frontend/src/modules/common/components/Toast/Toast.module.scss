@@ -1,0 +1,27 @@
+.root {
+    max-width: 400px;
+}
+
+.error {
+    box-shadow: 0 10px 15px 0 rgba(216, 142, 79, 0.15);
+    border: solid 1.5px #e3a37c;
+    background-color: #fffaf2;
+    h3 {
+        color: #814040;
+    }
+    p {
+        color: #814040;
+    }
+}
+
+.success {
+    box-shadow: 0 10px 15px 0 rgba(0, 114, 57, 0.15);
+    border: solid 1.5px #01896a;
+    background-color: #e4ffd9;
+    h3 {
+        color: #004d3b;
+    }
+    p {
+        color: #004d3b;
+    }
+}

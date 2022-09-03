@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+    <defs>
+        <clipPath id="vtokvjj33a">
+            <circle data-name="Ellipse 193" cx="9.5" cy="9.5" r="9.5" transform="translate(17 428)" style="fill:#27a88b"/>
+        </clipPath>
+    </defs>
+    <g data-name="Group 6274">
+        <path data-name="Rectangle 1825" style="fill:#fff" d="M0 0h30v30H0z"/>
+        <g data-name="Group 6030" transform="translate(-15.781 -251.001)">
+            <path d="M4.094 5.679a1.848 1.848 0 0 1-1.158-.528L.433 2.226A1.336 1.336 0 0 1 .335.357a1.2 1.2 0 0 1 1.7 0l3.151 2.518a1.657 1.657 0 0 1 .357 1.759 1.64 1.64 0 0 1-1.45 1.045z" transform="translate(36.646 271.626)" style="fill:#01896a"/>
+            <ellipse cx="9.856" cy="9.918" rx="9.856" ry="9.918" transform="translate(19.073 254.001)" style="fill:#01896a"/>
+            <g data-name="Mask Group 38" transform="translate(.781 -171.291)" style="clip-path:url(#vtokvjj33a)">
+                <ellipse data-name="Ellipse_746" cx="9.856" cy="9.918" rx="9.856" ry="9.918" transform="translate(18.292 425.292)" style="fill:#27a88b"/>
+            </g>
+        </g>
+    </g>
+</svg>

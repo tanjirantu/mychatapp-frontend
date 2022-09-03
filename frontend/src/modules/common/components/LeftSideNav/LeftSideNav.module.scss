@@ -1,0 +1,18 @@
+.activitybar {
+    width: 70px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.06);
+    .active {
+        position: relative;
+        display: flex;
+        width: 100%;
+
+        align-items: center;
+        img {
+            margin: 0 auto;
+            --tw-grayscale: grayscale(0%) !important;
+            opacity: 1 !important;
+        }
+    }
+}

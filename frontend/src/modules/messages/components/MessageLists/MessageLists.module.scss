@@ -1,0 +1,25 @@
+.container {
+    flex-basis: 300px;
+    width: 300px;
+    border-right: solid 1px #ededed;
+    .list {
+        height: 75px;
+        padding: 15px 10px 15px 19px;
+        border-bottom: solid 1px #ededed;
+        &:hover {
+            background-color: #f8f8f8;
+        }
+    }
+    .active {
+        background-color: #f8f8f8;
+    }
+}
+
+.profile {
+    gap: 15px;
+}
+
+.filter_messagelist {
+    height: 65.5px;
+    border-bottom: solid 1px #ededed;
+}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.883" height="18.613" viewBox="0 0 16.883 18.613">
+    <g data-name="Iconly/Light/Calendar">
+        <path d="M0 .473h15.232" transform="translate(.829 6.613)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+        <path d="M.459.473h.007" transform="translate(11.779 9.955)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+        <path d="M.459.473h.007" transform="translate(7.987 9.955)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+        <path d="M.459.473h.007" transform="translate(4.187 9.955)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+        <path d="M.459.473h.007" transform="translate(11.779 13.28)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+        <path d="M.459.473h.007" transform="translate(7.987 13.28)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+        <path d="M.459.473h.007" transform="translate(4.187 13.28)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+        <path d="M.463 0v2.816" transform="translate(11.434 .75)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+        <path d="M.463 0v2.816" transform="translate(4.53 .75)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+        <path d="M11.313 0H4.077C1.568 0 0 1.4 0 3.973v7.743a3.715 3.715 0 0 0 4.077 4.046h7.228c2.518 0 4.077-1.408 4.077-3.981V3.973C15.39 1.4 13.831 0 11.313 0z" transform="translate(.75 2.101)" style="fill:none;stroke:#01896a;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-width:1.5px"/>
+    </g>
+</svg>

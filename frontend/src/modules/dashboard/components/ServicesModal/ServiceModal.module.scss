@@ -1,0 +1,39 @@
+.checkboxLabel {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+    margin-left: 15px;
+}
+
+.stepCircleDefault {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #d3d3d3;
+    border-radius: 50%;
+}
+.stepCircleFill {
+    width: 20px;
+    height: 20px;
+    background-color: #01896a;
+    border-radius: 50%;
+}
+
+.stepCircleLight {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #01896a;
+    background-color: #e9ffe8;
+    border-radius: 50%;
+}
+.circleLeftDefault {
+    width: 15px;
+    height: 1px;
+    background-color: #d3d3d3;
+    box-shadow: 0 0 1px #d3d3d3;
+}
+.circleLeftFill {
+    width: 15px;
+    height: 1px;
+    box-shadow: 0 0 1px #01896a;
+    background-color: #01896a;
+}
