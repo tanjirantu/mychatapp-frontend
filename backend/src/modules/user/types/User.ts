@@ -10,8 +10,9 @@ type User = {
 		};
 	};
 	contact: {
-		countryCode: string;
+		dialCode: string;
 		phone: string;
+		phoneWithDialCode: string;
 		isPhoneNumberVerified: boolean;
 	};
 	lastLoginTime?: Date;

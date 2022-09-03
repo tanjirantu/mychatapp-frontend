@@ -2,7 +2,7 @@ import Joi from "joi";
 
 const getOneTimePassword = {
 	payload: {
-		countryCode: Joi.string().required(),
+		dialCode: Joi.string().required(),
 		phone: Joi.string().required(),
 	},
 };

@@ -3,10 +3,10 @@ import Joi from "joi";
 import { getDateTime, logger } from "../plugin/logger";
 import routes from "../plugin/router";
 // @ts-ignore
-import HapiRouter from "hapi-router";
 import Jwt from "hapi-auth-jwt2";
 import { HttpServerConfiguration } from "../config";
 import UserModel from "../modules/user/model";
+import { Server } from "socket.io";
 
 const validateJwt = async (
 	authUser: any,
@@ -86,6 +86,19 @@ const StartServer = async () => {
 	} catch (err) {
 		console.log("ERR: Server Plugin - ", err);
 	}
+
+	// const io = require("socket.io")(server.listener);
+	const io = new Server(server.listener, { cors: { origin: "*" } });
+	io.on("connection", async (socket: any) => {
+		try {
+			const authToken = socket?.handshake?.auth?.token;
+			socket.on("disconnect", () => {
+				console.log("User disconnected");
+			});
+		} catch (exp: any) {
+			console.log(exp.toString());
+		}
+	});
 
 	await server.start();
 

@@ -1,7 +1,7 @@
 type UserSignInInput = {
 	deviceUuid: string;
 	otp: string;
-	countryCode: string;
+	dialCode: string;
 	phone: string;
 };
 

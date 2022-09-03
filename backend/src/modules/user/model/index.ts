@@ -19,10 +19,10 @@ const userSchema = new Schema<User>(
 			},
 		},
 		contact: {
-			countryCode: String,
-			phone: String,
-			phoneNumberWithCountryCode: { type: String, unique: true },
-			isPhoneNumberVerified: {
+			phone: { type: String, trim: true },
+			dialCode: { type: String, trim: true },
+			phoneWithDialCode: { type: String, unique: true, trim: true },
+			isPhoneVerified: {
 				type: Boolean,
 				default: false,
 			},

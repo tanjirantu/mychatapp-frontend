@@ -9,7 +9,7 @@ const key = fs.readFileSync(
 type AuthUser = {
 	userUid: string;
 	deviceUuid: string;
-	phoneNumberWithCountryCode: string;
+	phoneWithDialCode: string;
 };
 
 export default async (authUser: AuthUser) => {
@@ -17,7 +17,7 @@ export default async (authUser: AuthUser) => {
 		const tokenData = {
 			deviceUuid: authUser.deviceUuid,
 			userUid: authUser.userUid,
-			phoneNumberWithCountryCode: authUser.phoneNumberWithCountryCode,
+			phoneWithDialCode: authUser.phoneWithDialCode,
 		};
 
 		const expireIndays: string =

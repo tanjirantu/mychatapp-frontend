@@ -40,9 +40,8 @@ export default async (request: Request, h: ResponseToolkit) => {
 				},
 				contact: {
 					phone: payload.phone,
-					countryCode: payload.countryCode,
-					phoneNumberWithCountryCode:
-						payload.countryCode + payload.phone,
+					dialCode: payload.dialCode,
+					phoneWithDialCode: payload.dialCode + payload.phone,
 					isVerified: true,
 				},
 				lastLoginTime: new Date(),
@@ -53,7 +52,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 			const token: any = await generateToken({
 				userUid: user.uid,
 				deviceUuid: payload.deviceUuid,
-				phoneNumberWithCountryCode: payload.countryCode + payload.phone,
+				phoneWithDialCode: payload.dialCode + payload.phone,
 			});
 
 			return h.response(sendResponse(token, 200, "SUCCESS")).code(200);

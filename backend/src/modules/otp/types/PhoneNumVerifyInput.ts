@@ -1,6 +1,6 @@
 type PhoneNumVerifyInput = {
 	deviceUuid: string;
-	countryCode: string;
+	dialCode: string;
 	phone: string;
 };
 

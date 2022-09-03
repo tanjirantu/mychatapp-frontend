@@ -1,4 +1,3 @@
-import Bcrypt from "bcryptjs";
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import BuyerModel from "../model";
 import { User } from "../types";

@@ -9,7 +9,13 @@ const roomSchema = new Schema<Room>(
 			required: true,
 			trim: true,
 		},
-		users: [{ type: Schema.Types.ObjectId, ref: "User" }],
+		label: String,
+		users: [
+			{
+				type: String,
+				required: true,
+			},
+		],
 		isDeleted: { type: Boolean, default: false },
 	},
 	{

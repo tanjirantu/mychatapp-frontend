@@ -5,6 +5,7 @@ import Crypto from "crypto";
 import { Twilio } from "twilio";
 import OtpModel from "../model";
 import { v1 as uuidv1 } from "uuid";
+import UserModel from "../../user/model";
 
 const twilioClient = new Twilio(
 	process.env.TWILIO_ACCOUNT_SID || "",
@@ -15,10 +16,11 @@ export default async (request: Request, h: ResponseToolkit) => {
 	try {
 		const payload: PhoneNumVerifyInput =
 			request.payload as PhoneNumVerifyInput;
-		const countryCode = payload.countryCode;
 
-		const phoneNumberWithCountryCode =
-			countryCode + parseInt(payload.phone);
+		const deviceUuid = uuidv1();
+		const dialCode = payload.dialCode;
+
+		const phoneWithDialCode = dialCode + parseInt(payload.phone);
 
 		const otp = generateOtp();
 
@@ -29,7 +31,6 @@ export default async (request: Request, h: ResponseToolkit) => {
 			currentTime.getTime() + minutesToAdd * 60000
 		).toUTCString();
 
-		const deviceUuid = uuidv1();
 		OtpModel.create({
 			otp,
 			deviceUuid,
@@ -39,7 +40,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 		// const response = await twilioClient.messages.create({
 		// 	body: `Your account verification code is: ${otp}`,
 		// 	from: process.env.TWILIO_PHONE_NUMBER || "+13344639271" ,
-		// 	to: `${phoneNumberWithCountryCode}`,
+		// 	to: `${phoneWithDialCode}`,
 		// });
 
 		// if (!response) {

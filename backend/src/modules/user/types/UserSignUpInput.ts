@@ -3,7 +3,7 @@ type UserSignUpInput = {
 	otp: string;
 	firstName: string;
 	lastName: string;
-	countryCode: string;
+	dialCode: string;
 	phone: string;
 };
 

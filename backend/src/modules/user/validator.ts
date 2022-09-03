@@ -12,13 +12,11 @@ const createUserPayload = {
 		},
 	},
 	contact: Joi.object({
-		webSite: Joi.string(),
-		countryCode: Joi.string().required(),
 		phone: Joi.string().required(),
-		email: Joi.string().required(),
-		secondaryEmail: Joi.string().optional(),
+		dialCode: Joi.string().required(),
 	}),
 };
+
 const updateUserPayload = {
 	password: Joi.string(),
 	meta: Joi.object({
@@ -31,12 +29,9 @@ const updateUserPayload = {
 		},
 	}),
 	contact: Joi.object({
-		webSite: Joi.string(),
-		countryCode: Joi.string(),
-		phone: Joi.string(),
-		email: Joi.string(),
-	}).optional(),
-	isActive: Joi.bool(),
+		phone: Joi.string().required(),
+		dialCode: Joi.string().required(),
+	}),
 };
 
 const getUsers = {
@@ -62,8 +57,8 @@ const signUpUser = {
 		deviceUuid: Joi.string(),
 		firstName: Joi.string(),
 		lastName: Joi.string(),
-		countryCode: Joi.string(),
 		phone: Joi.string(),
+		dialCode: Joi.string(),
 	},
 };
 
@@ -71,7 +66,7 @@ const signInUser = {
 	payload: {
 		otp: Joi.string(),
 		deviceUuid: Joi.string(),
-		countryCode: Joi.string(),
+		dialCode: Joi.string(),
 		phone: Joi.string(),
 	},
 };
