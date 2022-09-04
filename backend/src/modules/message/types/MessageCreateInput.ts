@@ -5,18 +5,16 @@ export type File = {
 };
 
 type Message = {
-	uid: string;
 	roomUid: string;
 	senderUid: string;
 	text: string;
-	files: File[];
-	replies: [
+	files?: File[];
+	replies?: [
 		{
 			text: string;
 			files: File[];
 		}
 	];
-	isDeleted: boolean;
 };
 
 export default Message;
