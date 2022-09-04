@@ -27,7 +27,6 @@ const MessageLists: React.FC<{ messageLists: MeesageHead[] }> = ({
 
     const { isLoading, lazyFetch, data } = useQuery(getAllMessageRoomQuery, {
         onQueryEnd: (data) => {
-            console.log(data);
             dispatch(setActiveHeads(data.result.messageRooms[0]));
             dispatch(
                 setMessageHeads({

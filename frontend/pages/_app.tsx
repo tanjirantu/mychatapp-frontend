@@ -9,7 +9,6 @@ import NextNProgress from '../src/modules/common/components/NProgress';
 //css
 import '../styles/build.css';
 import '../styles/global.scss';
-import '../src/modules/common/components/CustomDateFilter/datepicker.scss';
 import UserConnectivityLayout from '../src/layouts/UserConnectivityLayout';
 
 type NextPageWithLayout = NextPage & {

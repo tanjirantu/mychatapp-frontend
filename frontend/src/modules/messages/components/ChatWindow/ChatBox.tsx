@@ -22,10 +22,15 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
     { scrollToBottom, isLoading, onInfiniteScroll, filter, isTyping },
     ref
 ) => {
-    const { messages, activeMessagehead } = useAppSelector((state) => state.messages);
+    const { messages, activeMessagehead } = useAppSelector(
+        (state) => state.messages
+    );
     const { data } = useAppSelector((state) => state.user);
     const chatWindow = useRef<ChatRef>(null);
-    const results = messages.results[getUrlParams({ uid: activeMessagehead?.friends[0].uid, ...filter })];
+    const results =
+        messages.results[
+            getUrlParams({ uid: activeMessagehead?.friends[0].uid, ...filter })
+        ];
 
     useEffect(() => {
         if (results?.data.length && chatWindow.current) {
@@ -47,11 +52,14 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                     width={90}
                     height={90}
                     name={activeMessagehead?.friends[0]?.meta?.logo?.url || ''}
-                    src={activeMessagehead?.friends[0]?.meta?.logo?.url || ''}
+                    src={'/static/assets/images/avatar.png'}
                 />
-                <h2 className="text-xl text-dh-gray-800 mt-2.5">{activeMessagehead?.friends[0].meta.companyName}</h2>
+                <h2 className="text-xl text-dh-gray-800 mt-2.5">
+                    {activeMessagehead?.friends[0].meta.companyName}
+                </h2>
                 <h5 className="font-normal text-dh-gray-700 mt-1.5">
-                    This is very beginning of your conversations with {activeMessagehead?.friends[0].meta.companyName}
+                    This is very beginning of your conversations with{' '}
+                    {activeMessagehead?.friends[0].meta.companyName}
                 </h5>
             </div>
             <InfiniteScroll
@@ -62,7 +70,11 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                 direction="top"
                 count={results?.count}
             >
-                <div ref={chatWindow} className="px-7 pt-14 pb-4" data-firstscroll="no">
+                <div
+                    ref={chatWindow}
+                    className="px-7 pt-14 pb-4"
+                    data-firstscroll="no"
+                >
                     <div className="flex gap-5 flex-col">
                         {messagesList.map((message) => {
                             if (message.sender.uid === data?.uid) {
@@ -70,7 +82,10 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                                     <RightChatText
                                         date={message.createdAt}
                                         name="tusher"
-                                        url={message.sender?.meta?.logo?.url || ''}
+                                        url={
+                                            message.sender?.meta?.logo?.url ||
+                                            ''
+                                        }
                                         key={message._id}
                                         message={message.content.message}
                                         files={message?.content?.files || []}
@@ -91,7 +106,13 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                         })}
 
                         {isTyping ? (
-                            <UserTyping name="" url={activeMessagehead?.friends[0]?.meta?.logo?.url || ''} />
+                            <UserTyping
+                                name=""
+                                url={
+                                    activeMessagehead?.friends[0]?.meta?.logo
+                                        ?.url || ''
+                                }
+                            />
                         ) : null}
                     </div>
                 </div>
