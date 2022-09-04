@@ -5,3 +5,4 @@ export { default as sendResponse } from "./sendResponse";
 export { default as populateFindQuery } from "./populateFindQuery";
 export { default as cleanObject } from "./cleanObject";
 export { default as removeNullOrEmpty } from "./removeNullOrEmpty";
+export { default as getAuthUserFromToken } from "./getAuthUserFromToken";

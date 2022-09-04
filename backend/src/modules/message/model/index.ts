@@ -9,8 +9,8 @@ const messageSchema = new Schema<Message>(
 			required: true,
 			trim: true,
 		},
+		roomUid: String,
 		senderUid: String,
-		receiverUid: String,
 		text: String,
 		files: [
 			{
@@ -39,6 +39,6 @@ const messageSchema = new Schema<Message>(
 	}
 );
 
-const RoomModel = model<Message>("Message", messageSchema);
+const MessageModel = model<Message>("Message", messageSchema);
 
-export default RoomModel;
+export default MessageModel;

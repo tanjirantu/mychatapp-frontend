@@ -7,6 +7,19 @@ import Jwt from "hapi-auth-jwt2";
 import { HttpServerConfiguration } from "../config";
 import UserModel from "../modules/user/model";
 import { Server } from "socket.io";
+import { getAuthUserFromToken } from "../helper";
+import RoomModel from "../modules/room/model";
+import { AuthUser } from "../shared/types/DecodedAuthToken";
+import LastSeenModel from "../modules/last-seen/model";
+import LastSeenCreateInput from "../modules/last-seen/types/LastSeenCreateInput";
+import generateMessageUid from "../modules/message/repository/generateMessageUid";
+import MessageModel from "../modules/message/model";
+import { MessageCreateInput } from "../modules/message/types";
+// @ts-ignore
+import { createClient } from "redis";
+import RedisHashUpdateInput from "../shared/types/RedisHashUpdateInput";
+
+export const redisClient = createClient({ url: process.env.REDIS_URL });
 
 const validateJwt = async (
 	authUser: any,
@@ -21,6 +34,35 @@ const validateJwt = async (
 
 	if (validUser) return { isValid: true };
 	else return { isValid: false };
+};
+
+const getRooms = async (authUser: AuthUser) => {
+	const findQuery = { users: authUser.userUid, isDeleted: false };
+	const selectedFields = { uid: 1, _id: 0 };
+	return await RoomModel.find(findQuery, selectedFields);
+};
+
+const createMessage = async (payload: MessageCreateInput) => {
+	const uid = await generateMessageUid();
+	const result = await MessageModel.create({ uid, ...payload });
+	return result;
+};
+
+const updateLastSeen = async (lastSeen: LastSeenCreateInput) => {
+	return await LastSeenModel.find(
+		{
+			userUid: lastSeen.userUid,
+		},
+		{
+			$set: {
+				lastseenAt: new Date().toUTCString(),
+			},
+		}
+	);
+};
+
+const updateRedisHashmap = async ({ uid, key, data }: RedisHashUpdateInput) => {
+	await redisClient.hSet(uid, key, data);
 };
 
 const server = Hapi.server({
@@ -92,6 +134,57 @@ const StartServer = async () => {
 	io.on("connection", async (socket: any) => {
 		try {
 			const authToken = socket?.handshake?.auth?.token;
+			const authUser = getAuthUserFromToken(authToken);
+
+			console.log(`New user connected!`, authUser.userUid);
+
+			const myRooms = await getRooms(authUser);
+			const myRoomUids: any = myRooms.map((room) => room.uid);
+			myRoomUids.push(authUser.userUid);
+			socket.join(myRoomUids);
+
+			socket.broadcast.emit("onUserOnline", {
+				userUid: authUser.userUid,
+				isOnline: true,
+			});
+
+			socket.on("onTypingStarted", (roomUid: string, userUid: string) => {
+				socket
+					.to(roomUid)
+					.emit("onTypingStarted", { roomUid, userUid });
+			});
+
+			socket.on("onTypingStopped", (roomUid: string, userUid: string) => {
+				socket
+					.to(roomUid)
+					.emit("onTypingStopped", { roomUid, userUid });
+			});
+
+			socket.on("onMessageWindowChange", (data: LastSeenCreateInput) => {
+				updateLastSeen(data);
+			});
+
+			socket.on("onMessageSubmit", (data: MessageCreateInput) => {
+				const messageCreateInput: MessageCreateInput = {
+					...data,
+					senderUid: authUser.userUid,
+				};
+				createMessage(messageCreateInput);
+				updateRedisHashmap({
+					uid: data.roomUid,
+					key: "lastMessage",
+					data: JSON.stringify(data),
+				});
+				updateLastSeen({
+					userUid: authUser.userUid,
+					roomUid: data.roomUid,
+				});
+
+				socket
+					.to(data.roomUid)
+					.emit("onNewMessageReceived", messageCreateInput);
+			});
+
 			socket.on("disconnect", () => {
 				console.log("User disconnected");
 			});
