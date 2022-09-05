@@ -11,8 +11,6 @@ const List: React.FC<MeesageHead> = (props) => {
     const { activeMessagehead, activeFriends } = useAppSelector(
         (state) => state.messages
     );
-    const { data } = useAppSelector((state) => state.user);
-
     const selectMessageHead = () => {
         dispatch(setActiveHeads(props));
         router.push(`/messages?uid=${props.uid}`);
@@ -26,16 +24,18 @@ const List: React.FC<MeesageHead> = (props) => {
         >
             <UserAvatar
                 activeIndicator
-                // isActive={activeFriends[props.friends[0].uid || '']}
+                isActive={activeFriends[props?.users[0]?.uid || '']}
                 className="flex-shrink-0"
                 width={45}
                 height={45}
                 name={''}
-                src={''}
+                src={'/static/assets/images/avatar.png'}
             />
             <div className="w-full">
                 <div className="flex justify-between items-start">
-                    <h5 className="text-dh-gray-800 mb-1.5">""</h5>
+                    <p className="text-sm">
+                        {props?.users[0]?.contact?.phoneWithDialCode || ''}
+                    </p>
                 </div>
             </div>
         </div>

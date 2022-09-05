@@ -9,14 +9,18 @@ import useQuery from '../../../common/hooks/useQuery';
 const imageTypes = 'png,webp,jpeg,jpg';
 
 const SharedMedia = () => {
-    const { activeMessagehead, images } = useAppSelector((state) => state.messages);
-    const receiverUid = activeMessagehead?.friends[0].uid;
+    const { activeMessagehead, images } = useAppSelector(
+        (state) => state.messages
+    );
+    const receiverUid = activeMessagehead?.users[0]?.uid || '';
     const dispatch = useAppDispatch();
 
     const { isLoading, lazyFetch } = useQuery(getAllMessagesByRoomUidQuery, {
         skip:
             receiverUid === undefined ||
-            images.results[getUrlParams({ uid: receiverUid, includeOnly: imageTypes })] !== undefined
+            images.results[
+                getUrlParams({ uid: receiverUid, includeOnly: imageTypes })
+            ] !== undefined
                 ? true
                 : false,
         onQueryEnd: (state) => {
@@ -40,11 +44,17 @@ const SharedMedia = () => {
         },
     });
 
-    const results = images.results[getUrlParams({ uid: activeMessagehead?.friends[0].uid, includeOnly: imageTypes })];
+    const results =
+        images.results[
+            getUrlParams({
+                uid: activeMessagehead?.users[0]?.uid || '',
+                includeOnly: imageTypes,
+            })
+        ];
 
     const handleInfiniteScroll = async (skip: number) => {
         const response = await lazyFetch({
-            receiverUid: activeMessagehead?.friends[0]?.uid || '',
+            receiverUid: activeMessagehead?.users[0]?.uid || '',
             includeOnly: imageTypes,
             limit: 10,
             skip,
@@ -76,20 +86,22 @@ const SharedMedia = () => {
                 >
                     <>
                         {results?.data?.map((message) => {
-                            return message?.content?.files?.map((data, index) => {
-                                return (
-                                    <div
-                                        key={message?.uid + index}
-                                        className="w-20 h-24 overflow-hidden rounded  relative border-2"
-                                    >
-                                        <img
-                                            className="absolute min-w-full min-h-full object-cover"
-                                            src={data?.url || ''}
-                                            alt=""
-                                        />
-                                    </div>
-                                );
-                            });
+                            return message?.content?.files?.map(
+                                (data, index) => {
+                                    return (
+                                        <div
+                                            key={message?.uid + index}
+                                            className="w-20 h-24 overflow-hidden rounded  relative border-2"
+                                        >
+                                            <img
+                                                className="absolute min-w-full min-h-full object-cover"
+                                                src={data?.url || ''}
+                                                alt=""
+                                            />
+                                        </div>
+                                    );
+                                }
+                            );
                         })}
                     </>
                 </InfiniteScroll>

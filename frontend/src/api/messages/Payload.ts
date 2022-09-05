@@ -7,7 +7,7 @@ export type MessageRoomPayload = {
 
 export type CreateRoomPayload = {
     label: string;
-    users: `USR-${string}`[];
+    users: string[];
 };
 
 export type MessagePayload = {

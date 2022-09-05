@@ -27,14 +27,14 @@ const MessageLists: React.FC<{ messageLists: MeesageHead[] }> = ({
 
     const { isLoading, lazyFetch, data } = useQuery(getAllMessageRoomQuery, {
         onQueryEnd: (data) => {
-            // dispatch(setActiveHeads(data.result.rooms[0]));
+            dispatch(setActiveHeads(data.result.rooms[0]));
             dispatch(
                 setMessageHeads({
                     results: data.result.rooms,
                     count: data.result.count,
                 })
             );
-            // router.push(`/messages?uid=${data.result.rooms[0].uid}`);
+            router.push(`/messages?uid=${data.result.rooms[0].uid}`);
         },
         skip: !!messageHeads.results.length,
     });

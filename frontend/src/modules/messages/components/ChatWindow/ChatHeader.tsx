@@ -12,12 +12,19 @@ const ChatHeader: React.FC<IChatHeader> = ({ onSearch }) => {
 
     const { activeMessagehead } = useAppSelector((state) => state.messages);
     return (
-        <div className={`bg-white flex items-center justify-between flex-shrink-0 pl-7 pr-5 ${styles.chat_header}  `}>
+        <div
+            className={`bg-white flex items-center justify-between flex-shrink-0 pl-7 pr-5 ${styles.chat_header}  `}
+        >
             <div className="self-center">
-                <h5 className="text-dh-gray-800 ">{activeMessagehead?.friends[0]?.meta?.companyName || ''} </h5>
+                <h5 className="text-dh-gray-800 ">
+                    {activeMessagehead?.users[0]?.contact?.phoneWithDialCode ||
+                        ''}{' '}
+                </h5>
                 <span className="text-dh-gray-700">
                     {activeMessagehead?.seenAt
-                        ? '  Last seen' + ' ' + formatMessageFromNow(activeMessagehead?.seenAt)
+                        ? '  Last seen' +
+                          ' ' +
+                          formatMessageFromNow(activeMessagehead?.seenAt)
                         : null}
                 </span>
             </div>
@@ -30,7 +37,11 @@ const ChatHeader: React.FC<IChatHeader> = ({ onSearch }) => {
                             className=" bg-dh-gray-200 outline-none"
                             placeholder="Search Messages"
                         />
-                        <img className="w-7 h-7" src="/static/assets/icons/message-search.png" alt="" />
+                        <img
+                            className="w-7 h-7"
+                            src="/static/assets/icons/message-search.png"
+                            alt=""
+                        />
                     </div>
                 ) : (
                     <img
@@ -40,9 +51,21 @@ const ChatHeader: React.FC<IChatHeader> = ({ onSearch }) => {
                         onClick={() => setIsOpenSearch(!isOpenSearch)}
                     />
                 )}
-                <img className="w-9 h-9 cursor-pointer" src="/static/assets/icons/message-pin.png" alt="" />
-                <img className="w-9 h-9 cursor-pointer" src="/static/assets/icons/message-calender.png" alt="" />
-                <img className="w-9 h-9 cursor-pointer" src="/static/assets/icons/message-option.png" alt="" />
+                <img
+                    className="w-9 h-9 cursor-pointer"
+                    src="/static/assets/icons/message-pin.png"
+                    alt=""
+                />
+                <img
+                    className="w-9 h-9 cursor-pointer"
+                    src="/static/assets/icons/message-calender.png"
+                    alt=""
+                />
+                <img
+                    className="w-9 h-9 cursor-pointer"
+                    src="/static/assets/icons/message-option.png"
+                    alt=""
+                />
             </div>
         </div>
     );

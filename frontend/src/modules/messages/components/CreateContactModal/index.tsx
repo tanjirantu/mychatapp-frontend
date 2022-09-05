@@ -14,7 +14,15 @@ type PhoneInput = {
     countryData: CountryData;
 };
 
-const CreateContactModal = () => {
+interface ICreateContactModal {
+    onClose: () => void;
+    isOpen: boolean;
+}
+
+const CreateContactModal: React.FC<ICreateContactModal> = ({
+    isOpen,
+    onClose,
+}) => {
     const [contact, setContact] = useState<PhoneInput>({
         phone: '',
         countryData: {
@@ -39,28 +47,33 @@ const CreateContactModal = () => {
         { skip: number === '' ? true : false }
     );
 
-    const handleCreateRoom = async (uid: `USR-${string}`) => {
+    const handleCreateRoom = async (uid: string) => {
         if (userData?.uid === undefined) return;
         try {
             const response = await createRoomMutation({
                 label: uid,
-                users: [userData.uid, uid],
+                users: [uid],
             });
 
-            console.log(response);
+            if (response.statusCode === 200) {
+                onClose();
+            }
         } catch (error) {}
     };
 
     return (
         <Dialog
             className="max-w-xl rounded-md  p-5"
-            open
-            onClose={() => console.log('')}
+            open={isOpen}
+            onClose={onClose}
         >
             <div>
                 <div className="flex justify-between ">
                     <h3>Create Contact</h3>
-                    <div className="cursor-pointer select-none  ">
+                    <div
+                        onClick={onClose}
+                        className="cursor-pointer select-none  "
+                    >
                         <img src="/static/assets/icons/clear.svg" alt="" />
                     </div>
                 </div>

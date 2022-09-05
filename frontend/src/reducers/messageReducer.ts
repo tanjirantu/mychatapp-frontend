@@ -73,7 +73,10 @@ const messageSlice = createSlice({
 
             const data =
                 action.payload.type === 'join'
-                    ? [...action.payload.data, ...state.messages.results[urlParms].data]
+                    ? [
+                          ...action.payload.data,
+                          ...state.messages.results[urlParms].data,
+                      ]
                     : action.payload.data;
 
             state.messages.results[urlParms] = {
@@ -95,7 +98,10 @@ const messageSlice = createSlice({
 
             const data =
                 action.payload.type === 'join'
-                    ? [...state.images.results[urlParms]?.data, ...action.payload.data]
+                    ? [
+                          ...state.images.results[urlParms]?.data,
+                          ...action.payload.data,
+                      ]
                     : action.payload.data;
 
             state.images.results[urlParms] = {
@@ -117,7 +123,10 @@ const messageSlice = createSlice({
 
             const data =
                 action.payload.type === 'join'
-                    ? [...state.attachments.results[urlParms]?.data, ...action.payload.data]
+                    ? [
+                          ...state.attachments.results[urlParms]?.data,
+                          ...action.payload.data,
+                      ]
                     : action.payload.data;
 
             state.attachments.results[urlParms] = {
@@ -128,7 +137,10 @@ const messageSlice = createSlice({
 
         setMessage(
             state: typeof initialState,
-            action: PayloadAction<{ data: Message; params: { uid: string; search?: string } }>
+            action: PayloadAction<{
+                data: Message;
+                params: { uid: string; search?: string };
+            }>
         ) {
             const urlParms = getUrlParams(action.payload.params);
             if (state.messages.results[urlParms] === undefined) {
@@ -138,13 +150,16 @@ const messageSlice = createSlice({
                 };
             } else {
                 state.messages.results[urlParms] = {
-                    data: [...state.messages.results[urlParms].data, action.payload.data],
+                    data: [
+                        ...state.messages.results[urlParms].data,
+                        action.payload.data,
+                    ],
                     count: state.messages.results[urlParms].count + 1,
                 };
             }
 
             const findIndex = state.messageHeads.results.findIndex((head) => {
-                return action.payload.params.uid === head.friends[0].uid;
+                return action.payload.params.uid === head.users[0].uid;
             });
             if (findIndex > -1) {
                 const _messageHeads = [...state.messageHeads.results];
@@ -154,18 +169,30 @@ const messageSlice = createSlice({
             }
         },
 
-        setMessageHeads(state: typeof initialState, action: PayloadAction<State['messageHeads']>) {
+        setMessageHeads(
+            state: typeof initialState,
+            action: PayloadAction<State['messageHeads']>
+        ) {
             state.messageHeads = action.payload;
         },
 
-        setActiveHeads(state: typeof initialState, action: PayloadAction<State['activeMessagehead']>) {
+        setActiveHeads(
+            state: typeof initialState,
+            action: PayloadAction<State['activeMessagehead']>
+        ) {
             state.activeMessagehead = action.payload;
         },
-        setActiveFriend(state: typeof initialState, action: PayloadAction<string>) {
+        setActiveFriend(
+            state: typeof initialState,
+            action: PayloadAction<string>
+        ) {
             state.activeFriends[action.payload] = true;
         },
 
-        setInActiveFriend(state: typeof initialState, action: PayloadAction<string>) {
+        setInActiveFriend(
+            state: typeof initialState,
+            action: PayloadAction<string>
+        ) {
             state.activeFriends[action.payload] = false;
         },
     },
