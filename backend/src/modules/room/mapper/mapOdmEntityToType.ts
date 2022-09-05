@@ -13,6 +13,8 @@ const mapOdmEntityToType = (room: RoomWithUserDetails) => {
 				phoneWithDialCode: user.contact.phoneWithDialCode,
 			},
 		})),
+		lastSeenAt: room?.lastSeenAt,
+		lastMessage: room?.lastMessage,
 	};
 };
 
