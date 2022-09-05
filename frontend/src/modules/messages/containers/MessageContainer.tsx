@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ChatWindow from '../components/ChatWindow';
 import MessageLists from '../components/MessageLists';

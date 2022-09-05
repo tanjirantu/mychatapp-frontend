@@ -5,6 +5,9 @@ import Dialog from '../../../common/components/Dialog';
 import 'react-phone-input-2/lib/style.css';
 import useDebounce from '../../../common/hooks/useDebounce';
 import { useGetUsersQuery } from '../../../../api/users';
+import UserAvatar from '../../../common/components/UserAvatar';
+import { createRoomMutation } from '../../../../api/messages';
+import { useAppSelector } from '../../../common/hooks';
 
 type PhoneInput = {
     phone: string;
@@ -22,16 +25,31 @@ const CreateContactModal = () => {
         },
     });
 
+    const { data: userData } = useAppSelector((state) => state.user);
     const value = useDebounce(contact.phone, 700);
 
-    const { isLoading, data } = useGetUsersQuery(
+    const number = value.replace(contact.countryData.dialCode, '');
+
+    const { isFetching, data } = useGetUsersQuery(
         {
             params: {
                 phone: value ? value : '',
             },
         },
-        { skip: !value.replace(contact.countryData.dialCode, '') }
+        { skip: number === '' ? true : false }
     );
+
+    const handleCreateRoom = async (uid: `USR-${string}`) => {
+        if (userData?.uid === undefined) return;
+        try {
+            const response = await createRoomMutation({
+                label: uid,
+                users: [userData.uid, uid],
+            });
+
+            console.log(response);
+        } catch (error) {}
+    };
 
     return (
         <Dialog
@@ -48,7 +66,7 @@ const CreateContactModal = () => {
                 </div>
 
                 <div>
-                    <div className="mb-7 mt-6">
+                    <div className=" mb-2 mt-6">
                         <PhoneInput
                             inputStyle={{
                                 border: 'none',
@@ -69,6 +87,30 @@ const CreateContactModal = () => {
                             }
                         />
                     </div>
+                </div>
+
+                {data?.result.users.length && isFetching !== true ? (
+                    <h5 className="mb-2">Select Contact </h5>
+                ) : null}
+
+                <div>
+                    {data?.result.users.map((user) => {
+                        return (
+                            <div
+                                onClick={() => handleCreateRoom(user.uid)}
+                                key={user.uid}
+                                className="bg-gray-100 flex gap-3 hover:bg-opacity-100 items-center cursor-pointer select-none px-3 py-2 bg-opacity-60 rounded-md "
+                            >
+                                <UserAvatar
+                                    height={35}
+                                    width={35}
+                                    src="/static/assets/images/avatar.png"
+                                    name=""
+                                />
+                                <h4>{user.contact.phoneWithDialCode}</h4>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </Dialog>

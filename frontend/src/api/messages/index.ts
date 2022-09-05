@@ -1,16 +1,21 @@
 import { http } from '../../config';
 import { MeesageHead } from './Response';
 import { IApiResponse } from '../IApiResponse';
-import { MessageRoomPayload, MessagePayload, Message } from './Payload';
+import {
+    MessageRoomPayload,
+    MessagePayload,
+    Message,
+    CreateRoomPayload,
+} from './Payload';
 import { AxiosResponse } from 'axios';
 import getUrlParams from '../../helpers/utils/getUrlParams';
 
-export const createRoomMutation = async (payload: MessageRoomPayload) => {
+export const createRoomMutation = async (payload: CreateRoomPayload) => {
     try {
         const response = await http.post<
             MessageRoomPayload,
             AxiosResponse<IApiResponse<{ room: MeesageHead }>>
-        >('/message-rooms', payload);
+        >('/rooms', payload);
         return response.data;
     } catch (error) {
         throw new Error('Network response was not ok');
@@ -24,7 +29,7 @@ export const getAllMessageRoomQuery = async (params: {
 }) => {
     try {
         const response = await http.get<
-            IApiResponse<{ messageRooms: MeesageHead[]; count: number }>
+            IApiResponse<{ rooms: MeesageHead[]; count: number }>
         >(`/rooms?${getUrlParams(params)}`);
         return response.data;
     } catch (error) {

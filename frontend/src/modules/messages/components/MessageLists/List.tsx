@@ -26,43 +26,17 @@ const List: React.FC<MeesageHead> = (props) => {
         >
             <UserAvatar
                 activeIndicator
-                isActive={activeFriends[props.friends[0].uid || '']}
+                // isActive={activeFriends[props.friends[0].uid || '']}
                 className="flex-shrink-0"
                 width={45}
                 height={45}
-                name={
-                    props.friends[0].meta?.firstName &&
-                    props.friends[0].meta?.lastName
-                        ? `${props.friends[0].meta.firstName} ${props.friends[0].meta.firstName}`
-                        : `${props.friends[0].contact.phoneWithDialCode}`
-                }
-                src={props.friends[0].meta?.logo?.url || ''}
+                name={''}
+                src={''}
             />
             <div className="w-full">
                 <div className="flex justify-between items-start">
-                    <h5 className="text-dh-gray-800 mb-1.5">
-                        {props.friends[0].meta?.firstName &&
-                        props.friends[0].meta?.lastName
-                            ? `${props.friends[0].meta.firstName} ${props.friends[0].meta.firstName}`
-                            : `${props.friends[0].contact.phoneWithDialCode}`}
-                    </h5>
+                    <h5 className="text-dh-gray-800 mb-1.5">""</h5>
                 </div>
-                <p className="text-xs font-normal text-dh-gray-700 whitespace-nowrap text-ellipsis overflow-hidden">
-                    {props?.lastMessage?.files?.length ||
-                    props?.lastMessage?.text ? (
-                        <>
-                            {props?.lastMessage?.receiver?.uid !== data?.uid
-                                ? 'You'
-                                : `${props.friends[0].meta.companyName}`}
-                            :{' '}
-                            {props?.lastMessage?.content?.files?.length
-                                ? 'sent an attachment'
-                                : props?.lastMessage?.content?.message}
-                        </>
-                    ) : (
-                        'Start conversation'
-                    )}
-                </p>
             </div>
         </div>
     );

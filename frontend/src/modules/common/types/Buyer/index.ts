@@ -1,5 +1,5 @@
 export type Buyer = {
-    uid: string;
+    uid: `USR-${string}`;
     meta: {
         companyName: string;
         firstName: string;

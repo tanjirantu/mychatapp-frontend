@@ -5,6 +5,11 @@ export type MessageRoomPayload = {
     };
 };
 
+export type CreateRoomPayload = {
+    label: string;
+    users: `USR-${string}`[];
+};
+
 export type MessagePayload = {
     receiver: {
         uid: string;

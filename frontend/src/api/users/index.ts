@@ -8,7 +8,7 @@ import getUrlParams from '../../helpers/utils/getUrlParams';
 export const userApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         getUsers: build.query<
-            IApiResponse<UserResponse>,
+            IApiResponse<{ users: UserResponse[] }>,
             { params?: UserFilterInput } | void
         >({
             query: ({ params }: { params: UserFilterInput }) => ({

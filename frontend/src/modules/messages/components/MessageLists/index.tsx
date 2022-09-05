@@ -27,14 +27,14 @@ const MessageLists: React.FC<{ messageLists: MeesageHead[] }> = ({
 
     const { isLoading, lazyFetch, data } = useQuery(getAllMessageRoomQuery, {
         onQueryEnd: (data) => {
-            dispatch(setActiveHeads(data.result.messageRooms[0]));
+            // dispatch(setActiveHeads(data.result.rooms[0]));
             dispatch(
                 setMessageHeads({
-                    results: data.result.messageRooms,
+                    results: data.result.rooms,
                     count: data.result.count,
                 })
             );
-            router.push(`/messages?uid=${data.result.messageRooms[0].uid}`);
+            // router.push(`/messages?uid=${data.result.rooms[0].uid}`);
         },
         skip: !!messageHeads.results.length,
     });
@@ -45,7 +45,7 @@ const MessageLists: React.FC<{ messageLists: MeesageHead[] }> = ({
                 const response = await lazyFetch({ search: search });
                 dispatch(
                     setMessageHeads({
-                        results: response.result.messageRooms,
+                        results: response.result.rooms,
                         count: response.result.count,
                     })
                 );
@@ -55,7 +55,7 @@ const MessageLists: React.FC<{ messageLists: MeesageHead[] }> = ({
             if (data) {
                 dispatch(
                     setMessageHeads({
-                        results: data?.result.messageRooms,
+                        results: data?.result.rooms,
                         count: data?.result.count,
                     })
                 );
@@ -69,7 +69,7 @@ const MessageLists: React.FC<{ messageLists: MeesageHead[] }> = ({
         const response = await lazyFetch({ search: search, limit: 10, skip });
         dispatch(
             setMessageHeads({
-                results: response.result.messageRooms,
+                results: response.result.rooms,
                 count: response.result.count,
             })
         );
