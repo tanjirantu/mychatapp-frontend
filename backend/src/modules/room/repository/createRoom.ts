@@ -3,7 +3,6 @@ import { RoomCreateInput } from "../types";
 import { sendResponse, sendErrorResponse } from "../../../helper";
 import generateRoomUid from "./generateRoomUid";
 import RoomModel from "../model";
-import { AuthUser } from "../../../shared/types/DecodedAuthToken";
 
 export default async (request: Request, h: ResponseToolkit) => {
 	try {
