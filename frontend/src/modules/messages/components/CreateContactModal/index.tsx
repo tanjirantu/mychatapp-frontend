@@ -7,7 +7,11 @@ import useDebounce from '../../../common/hooks/useDebounce';
 import { useGetUsersQuery } from '../../../../api/users';
 import UserAvatar from '../../../common/components/UserAvatar';
 import { createRoomMutation } from '../../../../api/messages';
-import { useAppSelector } from '../../../common/hooks';
+import {
+    setActiveHeads,
+    setMessageHeads,
+} from '../../../../reducers/messageReducer';
+import { useAppDispatch, useAppSelector } from '../../../common/hooks';
 
 type PhoneInput = {
     phone: string;
@@ -32,8 +36,9 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
             name: '',
         },
     });
-
+    const dispatch = useAppDispatch();
     const { data: userData } = useAppSelector((state) => state.user);
+    const { messageHeads } = useAppSelector((state) => state.messages);
     const value = useDebounce(contact.phone, 700);
 
     const number = value.replace(contact.countryData.dialCode, '');
@@ -55,7 +60,33 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
                 users: [uid],
             });
 
+            if (messageHeads.results.length) {
+                const _messageHeads = messageHeads.results.filter(
+                    (data) => data.uid !== response.result.room.uid
+                );
+                dispatch(
+                    setMessageHeads({
+                        results: [response.result.room, ..._messageHeads],
+                        count: messageHeads.count,
+                    })
+                );
+                dispatch(setActiveHeads(response.result.room));
+            }
+
             if (response.statusCode === 200) {
+                if (messageHeads.results.length) {
+                    const _messageHeads = messageHeads.results.filter(
+                        (data) => data.uid !== response.result.room.uid
+                    );
+                    dispatch(
+                        setMessageHeads({
+                            results: [response.result.room, ..._messageHeads],
+                            count: messageHeads.count,
+                        })
+                    );
+                    dispatch(setActiveHeads(response.result.room));
+                }
+
                 onClose();
             }
         } catch (error) {}

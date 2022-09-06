@@ -62,6 +62,8 @@ export default async (request: Request, h: ResponseToolkit) => {
 			{ $limit: limit },
 		]);
 
+		console.log("rooms", rooms);
+
 		const messageRooms: any = [];
 
 		for await (const room of rooms) {

@@ -15,6 +15,8 @@ import { SignInInput } from '../../../api/auth/types/SignInInput';
 import { OtpInput } from '../../../api/auth/types/OtpInput';
 import Link from 'next/link';
 import { setToken } from '../../../libs/authClient';
+import toast, { Toaster } from 'react-hot-toast';
+import Toast from '../../common/components/Toast';
 
 type CountryData = {
     dialCode: string;
@@ -80,17 +82,28 @@ const SignInComponent = () => {
             dialCode,
             phone: phone.split(dialCode)[1],
         };
-        const { token } = await signIn(signInInput);
-        if (token) {
+        const response = await signIn(signInInput);
+
+        if (response) {
             setIsOtpModalOpen(false);
-            setToken({ token });
+            setToken({ token: response.token });
             router.push('/');
+            return;
         }
+
+        toast.custom(() => (
+            <Toast
+                title="Error!"
+                type="error"
+                message="OTP is not correct, try again"
+            />
+        ));
     };
 
     return (
         <>
             <ContainerComponent>
+                <Toaster position="bottom-center" containerClassName="mb-10" />
                 <div className="w-full h-screen flex">
                     <div
                         className={classNames(
