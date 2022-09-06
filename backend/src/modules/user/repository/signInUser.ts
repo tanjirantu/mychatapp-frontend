@@ -19,11 +19,15 @@ export default async (request: Request, h: ResponseToolkit) => {
 		if (isUserVerified) {
 			const user = await UserModel.findOneAndUpdate(
 				{
-					deviceUuid: payload.deviceUuid,
 					"contact.phone": payload.phone,
 					isDeleted: false,
-					lastLoginTime: new Date(),
-					isLoggedIn: true,
+				},
+				{
+					$set: {
+						deviceUuid: payload.deviceUuid,
+						lastLoginTime: new Date(),
+						isLoggedIn: true,
+					},
 				},
 				{
 					new: true,
