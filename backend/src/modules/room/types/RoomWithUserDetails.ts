@@ -15,6 +15,8 @@ type RoomWithUserDetails = {
 			};
 		}
 	];
+	lastSeenAt?: Date;
+	lastMessage?: string;
 	createdAt: string;
 	updatedAt: string;
 };

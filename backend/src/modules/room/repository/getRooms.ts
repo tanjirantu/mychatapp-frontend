@@ -1,14 +1,35 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { sendResponse } from "../../../helper";
+import { flattenObject, sendResponse } from "../../../helper";
 import mapOdmEntityToType from "../mapper/mapOdmEntityToType";
 import RoomModel from "../model";
+import { pubClient } from "../../../server/httpServer";
+import MessageModel from "../../message/model";
+
+const getNewMessagesCount = async (roomUid: string, userUid: string) => {
+	const myLastSeenAt = (await pubClient.hGet(
+		`${roomUid}:${userUid}`,
+		"lastSeenAt"
+	)) as string;
+
+	const createdAtObj: any = {};
+	createdAtObj["$gt"] = new Date(JSON.parse(myLastSeenAt));
+
+	const newMessagesFindQuery: any = flattenObject({ "room.uid": roomUid });
+
+	if (myLastSeenAt) newMessagesFindQuery["createdAt"] = createdAtObj;
+
+	const newMessagesCount = await MessageModel.countDocuments(
+		newMessagesFindQuery
+	);
+	return newMessagesCount;
+};
 
 export default async (request: Request, h: ResponseToolkit) => {
 	try {
 		const skip = request.query.skip ? request.query.skip : 0;
 		const limit = request.query.limit ? request.query.limit : 10;
 
-		const authUser = request.auth.credentials;
+		const authUser: any = request.auth.credentials;
 		const findQuery = { users: authUser.userUid };
 		const rooms = await RoomModel.aggregate([
 			{
@@ -41,12 +62,49 @@ export default async (request: Request, h: ResponseToolkit) => {
 			{ $limit: limit },
 		]);
 
+		const messageRooms: any = [];
+
+		for await (const room of rooms) {
+			const lastMessageResponse = await pubClient.hGet(
+				room.uid,
+				"lastMessage"
+			);
+			const lastSeenAtResponse = (await pubClient.hGet(
+				`${room.uid}:${room.users[0].uid}`,
+				"lastSeenAt"
+			)) as string;
+
+			// const promiseResolved: any = await Promise.all([lastMessageResponse, lastSeenAtResponse]);
+
+			let seenAt: any = null;
+			if (lastSeenAtResponse !== null)
+				seenAt = JSON.parse(lastSeenAtResponse);
+
+			let parsedLastMessage: any = {};
+			if (lastMessageResponse)
+				parsedLastMessage = JSON.parse(lastMessageResponse);
+
+			const newMessagesCount = await getNewMessagesCount(
+				room.uid,
+				authUser.userUid
+			);
+
+			const updatedMessageRoom = {
+				...room,
+				lastMessage: parsedLastMessage,
+				seenAt,
+				newMessagesCount,
+			};
+
+			messageRooms.push(updatedMessageRoom);
+		}
+
 		const count = await RoomModel.countDocuments(findQuery);
 
 		return h
 			.response(
 				sendResponse(
-					{ rooms: rooms.map(mapOdmEntityToType), count },
+					{ rooms: messageRooms.map(mapOdmEntityToType), count },
 					200,
 					"SUCCESS"
 				)

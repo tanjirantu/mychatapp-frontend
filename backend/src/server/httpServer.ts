@@ -17,9 +17,12 @@ import MessageModel from "../modules/message/model";
 import { MessageCreateInput } from "../modules/message/types";
 // @ts-ignore
 import { createClient } from "redis";
+import { createAdapter } from "@socket.io/redis-adapter";
 import RedisHashUpdateInput from "../shared/types/RedisHashUpdateInput";
 
-export const redisClient = createClient({ url: process.env.REDIS_URL });
+export const pubClient = createClient({ url: process.env.REDIS_URL });
+const subClient = pubClient.duplicate();
+const redisClient = pubClient.duplicate();
 
 const validateJwt = async (
 	authUser: any,
@@ -62,7 +65,7 @@ const updateLastSeen = async (lastSeen: LastSeenCreateInput) => {
 };
 
 const updateRedisHashmap = async ({ uid, key, data }: RedisHashUpdateInput) => {
-	await redisClient.hSet(uid, key, data);
+	await pubClient.hSet(uid, key, data);
 };
 
 const server = Hapi.server({
@@ -131,6 +134,9 @@ const StartServer = async () => {
 
 	// const io = require("socket.io")(server.listener);
 	const io = new Server(server.listener, { cors: { origin: "*" } });
+	Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
+		io.adapter(createAdapter(pubClient, subClient));
+	});
 	io.on("connection", async (socket: any) => {
 		try {
 			const authToken = socket?.handshake?.auth?.token;
@@ -175,10 +181,15 @@ const StartServer = async () => {
 					key: "lastMessage",
 					data: JSON.stringify(data),
 				});
-				updateLastSeen({
-					userUid: authUser.userUid,
-					roomUid: data.roomUid,
+				updateRedisHashmap({
+					uid: `${data.roomUid}:${authUser.userUid}`,
+					key: "lastSeenAt",
+					data: JSON.stringify(new Date().toUTCString()),
 				});
+				// updateLastSeen({
+				// 	userUid: authUser.userUid,
+				// 	roomUid: data.roomUid,
+				// });
 
 				socket
 					.to(data.roomUid)
