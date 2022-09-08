@@ -6,6 +6,8 @@ const getMessages = {
 	},
 	query: {
 		text: Joi.string(),
+		skip: Joi.string(),
+		limit: Joi.string(),
 	},
 };
 
