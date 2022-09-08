@@ -13,15 +13,9 @@ export default async (request: Request, h: ResponseToolkit) => {
 		if (request.query.skip) skip = request.query.skip;
 		if (request.query.limit) skip = request.query.limit;
 
-		const findQuery = {
-			$or: [
-				{ uid, senderUid: authUser.userUid },
-				{ uid, receiverUid: authUser.userUid },
-			],
-		};
-		const messages = await MessageModel.find(findQuery);
+		const messages = await MessageModel.find({ uid });
 
-		const count = await MessageModel.countDocuments(findQuery)
+		const count = await MessageModel.countDocuments({ uid })
 			.sort({ _id: -1 })
 			.skip(skip)
 			.limit(limit);

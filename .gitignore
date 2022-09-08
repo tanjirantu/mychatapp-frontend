@@ -11,7 +11,7 @@ build.*.local.sh
 
 .DS_Store
 secrets/
-
+.idea
 certs/*.crt
 certs/*.key
 certs/*.csr
