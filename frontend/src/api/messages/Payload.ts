@@ -29,28 +29,16 @@ type File = {
 };
 
 export type Message = {
-    createdAt: string;
     uid: string;
-    _id: string;
-
-    content: {
-        message: string;
-        files: File[];
-    };
-    sender: {
-        uid: string;
-        meta: {
-            firstName: string;
-            lastName: string;
-            logo: {
-                url: string;
-                name: string;
-            };
-        };
-        contact: {
-            phone: string;
-            dialCode: string;
-            phoneWithDialCode: string;
-        };
-    };
+    createdAt: string;
+    roomUid: string;
+    senderUid: string;
+    text: string;
+    files?: File[];
+    replies?: [
+        {
+            text: string;
+            files: File[];
+        }
+    ];
 };

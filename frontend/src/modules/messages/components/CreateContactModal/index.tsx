@@ -60,31 +60,19 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
                 users: [uid],
             });
 
-            if (messageHeads.results.length) {
-                const _messageHeads = messageHeads.results.filter(
-                    (data) => data.uid !== response.result.room.uid
-                );
-                dispatch(
-                    setMessageHeads({
-                        results: [response.result.room, ..._messageHeads],
-                        count: messageHeads.count,
-                    })
-                );
-                dispatch(setActiveHeads(response.result.room));
-            }
-
             if (response.statusCode === 200) {
                 if (messageHeads.results.length) {
                     const _messageHeads = messageHeads.results.filter(
-                        (data) => data.uid !== response.result.room.uid
+                        (data) => data.uid !== response.result.uid
                     );
                     dispatch(
                         setMessageHeads({
-                            results: [response.result.room, ..._messageHeads],
+                            results: [response.result, ..._messageHeads],
                             count: messageHeads.count,
                         })
                     );
-                    dispatch(setActiveHeads(response.result.room));
+
+                    // dispatch(setActiveHeads(response.result));
                 }
 
                 onClose();
@@ -100,7 +88,7 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
         >
             <div>
                 <div className="flex justify-between ">
-                    <h3>Create Contact</h3>
+                    <h3>Search Contact</h3>
                     <div
                         onClick={onClose}
                         className="cursor-pointer select-none  "

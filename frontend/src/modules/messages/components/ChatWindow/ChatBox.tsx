@@ -29,7 +29,7 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
     const chatWindow = useRef<ChatRef>(null);
     const results =
         messages.results[
-            getUrlParams({ uid: activeMessagehead?.friends[0].uid, ...filter })
+            getUrlParams({ uid: activeMessagehead?.users[0].uid, ...filter })
         ];
 
     useEffect(() => {
@@ -51,15 +51,15 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                 <UserAvatar
                     width={90}
                     height={90}
-                    name={activeMessagehead?.friends[0]?.meta?.logo?.url || ''}
+                    name={''}
                     src={'/static/assets/images/avatar.png'}
                 />
                 <h2 className="text-xl text-dh-gray-800 mt-2.5">
-                    {activeMessagehead?.friends[0].meta.companyName}
+                    {activeMessagehead?.users[0].contact.phoneWithDialCode}
                 </h2>
                 <h5 className="font-normal text-dh-gray-700 mt-1.5">
                     This is very beginning of your conversations with{' '}
-                    {activeMessagehead?.friends[0].meta.companyName}
+                    {activeMessagehead?.users[0].contact.phoneWithDialCode}
                 </h5>
             </div>
             <InfiniteScroll
@@ -108,10 +108,7 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                         {isTyping ? (
                             <UserTyping
                                 name=""
-                                url={
-                                    activeMessagehead?.friends[0]?.meta?.logo
-                                        ?.url || ''
-                                }
+                                url={'/static/assets/images/avatar.png'}
                             />
                         ) : null}
                     </div>

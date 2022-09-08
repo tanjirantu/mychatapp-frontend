@@ -50,7 +50,10 @@ type File = {
     url: string;
 };
 
-const useMessage = (roomUid: string | undefined, listenMessage: (value: MessageType) => void) => {
+const useMessage = (
+    roomUid: string | undefined,
+    listenMessage: (value: MessageType) => void
+) => {
     const socketRef = useRef<null | Socket>(null);
     const [isTyping, setIsTyping] = useState(false);
     const { play } = useAudio('/static/assets/audio/message-tone.mp3');
@@ -70,7 +73,10 @@ const useMessage = (roomUid: string | undefined, listenMessage: (value: MessageT
             });
             // Listens for incoming messages
             socketRef?.current?.on(NEW_MESSAGE_EVENT, (message) => {
-                if (message.room.uid === roomUid && message.receiver.uid === user.data.userUid) {
+                if (
+                    message.room.uid === roomUid &&
+                    message.receiver.uid === user.userUid
+                ) {
                     listenMessage(message);
                     playAudio();
                 }
@@ -78,7 +84,7 @@ const useMessage = (roomUid: string | undefined, listenMessage: (value: MessageT
             //litens for start typing message
             listenStartTyping();
             listenStopTyping();
-            windowChange(roomUid, user.data.userUid);
+            windowChange(roomUid, user.userUid);
 
             return () => {
                 socketRef.current?.disconnect();

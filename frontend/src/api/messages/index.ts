@@ -14,7 +14,7 @@ export const createRoomMutation = async (payload: CreateRoomPayload) => {
     try {
         const response = await http.post<
             MessageRoomPayload,
-            AxiosResponse<IApiResponse<{ room: MeesageHead }>>
+            AxiosResponse<IApiResponse<MeesageHead>>
         >('/rooms', payload);
         return response.data;
     } catch (error) {

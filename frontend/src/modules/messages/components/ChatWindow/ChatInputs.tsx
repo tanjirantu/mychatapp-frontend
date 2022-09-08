@@ -28,24 +28,25 @@ const NoSSRPicker = dynamic(
 interface ChatInputProps {
     scrollToBottom: (type: 'smooth' | 'auto') => void;
     onChatSubmit: (
-        { message, files }: { message: string; files: { url: string; name: string }[] },
-        receiverUid: string,
-        meta: {
-            companyName: string;
-            logo: {
-                url: string;
-                name: string;
-            };
-        }
+        {
+            message,
+            files,
+        }: { message: string; files: { url: string; name: string }[] },
+        receiverUid: string
     ) => void;
 
     startTyping: (userUid: string) => void;
     stopTyping: (userUid: string) => void;
 }
 
-const ChatInputs: React.FC<ChatInputProps> = ({ scrollToBottom, onChatSubmit, startTyping, stopTyping }) => {
+const ChatInputs: React.FC<ChatInputProps> = ({
+    scrollToBottom,
+    onChatSubmit,
+    startTyping,
+    stopTyping,
+}) => {
     const { activeMessagehead } = useAppSelector((state) => state.messages);
-    const { data: manufacturer } = useAppSelector((state) => state.user);
+    const { data: user } = useAppSelector((state) => state.user);
     const [message, setMessage] = useState('');
     const dispatch = useAppDispatch();
     const [isTyping, setIsTyping] = useState(false);
@@ -54,7 +55,8 @@ const ChatInputs: React.FC<ChatInputProps> = ({ scrollToBottom, onChatSubmit, st
 
     useEffect(() => {
         if (inputRef.current) {
-            inputRef.current.style.maxWidth = inputRef.current.offsetWidth + 'px';
+            inputRef.current.style.maxWidth =
+                inputRef.current.offsetWidth + 'px';
         }
     }, []);
 
@@ -86,46 +88,33 @@ const ChatInputs: React.FC<ChatInputProps> = ({ scrollToBottom, onChatSubmit, st
         if (uploadedFiles?.length) {
             uploadedFiles?.map((file, idx) => {
                 const fileType = getFileType(file?.url);
-                filesWithFileType.push({ ...file, fileType: fileType, originalFilename: files[idx]?.name });
+                filesWithFileType.push({
+                    ...file,
+                    fileType: fileType,
+                    originalFilename: files[idx]?.name,
+                });
             });
         }
         if (message || filesWithFileType?.length) {
             flushSync(() => {
                 onChatSubmit(
                     { message, files: [...filesWithFileType] },
-                    activeMessagehead?.friends[0].uid || '',
-                    activeMessagehead.friends[0].meta
+                    activeMessagehead?.users[0].uid || '',
+                    activeMessagehead.users[0].meta
                 );
                 dispatch(
                     setStoreMessage({
                         data: {
                             uid: new Date().toISOString(),
-                            _id: new Date().toISOString(),
-                            content: {
-                                files: [...filesWithFileType],
-                                message,
-                            },
-                            sender: {
-                                uid: manufacturer?.uid || '',
-                                meta: {
-                                    companyName: manufacturer?.meta.companyName || '',
-                                    logo: {
-                                        url: manufacturer?.meta?.logo?.url || '',
-                                        name: manufacturer?.meta?.logo?.url || '',
-                                    },
-                                },
-                                userType: 'MANUFACTURER',
-                            },
+                            roomUid: activeMessagehead.uid,
+                            files: [...filesWithFileType],
+                            text: message,
 
-                            receiver: {
-                                uid: activeMessagehead.friends[0].uid,
-                                meta: activeMessagehead.friends[0].meta,
-                                userType: 'BUYER',
-                            },
+                            senderUid: user?.uid || '',
                             createdAt: new Date().toISOString(),
                         },
                         params: {
-                            uid: activeMessagehead?.friends[0].uid || '',
+                            uid: activeMessagehead?.users[0].uid || '',
                         },
                     })
                 );
@@ -145,14 +134,14 @@ const ChatInputs: React.FC<ChatInputProps> = ({ scrollToBottom, onChatSubmit, st
         onChangeStart() {
             if (!isTyping && message.length) {
                 setIsTyping(true);
-                startTyping(activeMessagehead?.friends[0].uid || '');
+                startTyping(activeMessagehead?.users[0].uid || '');
             }
         },
 
         onChange() {
             if (isTyping) {
                 setIsTyping(false);
-                stopTyping(activeMessagehead?.friends[0].uid || '');
+                stopTyping(activeMessagehead?.users[0].uid || '');
             }
         },
     });
@@ -174,11 +163,15 @@ const ChatInputs: React.FC<ChatInputProps> = ({ scrollToBottom, onChatSubmit, st
 
     const handleInputChange = (event: React.FormEvent<HTMLDivElement>) => {
         const text = textFromDiv(event.currentTarget.innerHTML);
-        const cleanText = createDOMPurify.sanitize(text, { ALLOWED_ATTR: ['style'] });
+        const cleanText = createDOMPurify.sanitize(text, {
+            ALLOWED_ATTR: ['style'],
+        });
         setMessage(cleanText);
     };
     return (
-        <div className={`${styles.chat_inputs} py-3 flex-shrink-0 relative border-t border-dh-gray-200`}>
+        <div
+            className={`${styles.chat_inputs} py-3 flex-shrink-0 relative border-t border-dh-gray-200`}
+        >
             {files.length ? (
                 <div className="flex bg-white w-full gap-5 flex-wrap px-6 pb-4 pt-2">
                     <RenderUploadedFileThumbs
@@ -191,11 +184,25 @@ const ChatInputs: React.FC<ChatInputProps> = ({ scrollToBottom, onChatSubmit, st
             ) : null}
             <div className="gap-2.5 flex flex-shrink-0 items-end pl-6 pr-3">
                 <div className="flex gap-3.5 mr-3 flex-shrink-0 pb-2  ">
-                    <FileUploadInput onChange={handleFileChange} accept="image/*">
-                        <img className="w-6 h-6 cursor-pointer" src="/static/assets/icons/message-img.png" alt="" />
+                    <FileUploadInput
+                        onChange={handleFileChange}
+                        accept="image/*"
+                    >
+                        <img
+                            className="w-6 h-6 cursor-pointer"
+                            src="/static/assets/icons/message-img.png"
+                            alt=""
+                        />
                     </FileUploadInput>
-                    <FileUploadInput onChange={handleFileChange} accept=".pdf, .doc, .docx, .ppt, pptx, .zip">
-                        <img className="w-6 h-6 cursor-pointer" src="/static/assets/icons/message-assets.png" alt="" />
+                    <FileUploadInput
+                        onChange={handleFileChange}
+                        accept=".pdf, .doc, .docx, .ppt, pptx, .zip"
+                    >
+                        <img
+                            className="w-6 h-6 cursor-pointer"
+                            src="/static/assets/icons/message-assets.png"
+                            alt=""
+                        />
                     </FileUploadInput>
 
                     <Dropdown>
@@ -218,7 +225,9 @@ const ChatInputs: React.FC<ChatInputProps> = ({ scrollToBottom, onChatSubmit, st
 
                                         data={data}
                                         onEmojiSelect={(emoji: any) => {
-                                            setMessage(message?.concat(emoji?.native));
+                                            setMessage(
+                                                message?.concat(emoji?.native)
+                                            );
                                         }}
                                         previewPosition="none"
                                         set="google"
