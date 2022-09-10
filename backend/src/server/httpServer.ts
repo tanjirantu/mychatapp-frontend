@@ -47,6 +47,7 @@ const getRooms = async (authUser: AuthUser) => {
 
 const createMessage = async (payload: MessageCreateInput) => {
 	const uid = await generateMessageUid();
+
 	return MessageModel.create({ uid, ...payload });
 };
 
@@ -142,8 +143,6 @@ const StartServer = async () => {
 
 			const myRooms = await getRooms(authUser);
 
-			console.log("myroom", myRooms);
-
 			const myRoomUids: any = myRooms.map((room) => room.uid);
 			myRoomUids.push(authUser);
 			socket.join(myRoomUids);
@@ -173,6 +172,7 @@ const StartServer = async () => {
 					...data,
 					senderUid: authUser.userUid,
 				};
+
 				createMessage(messageCreateInput);
 				updateRedisHashmap({
 					uid: data.roomUid,
