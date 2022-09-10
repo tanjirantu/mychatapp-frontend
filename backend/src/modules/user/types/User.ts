@@ -1,13 +1,11 @@
 type User = {
 	uid: string;
 	deviceUuid: string;
-	meta: {
-		firstName: string;
-		lastName: string;
-		logo: {
-			url: string;
-			name: string;
-		};
+	firstName: string;
+	lastName: string;
+	logo: {
+		url: string;
+		name: string;
 	};
 	contact: {
 		dialCode: string;

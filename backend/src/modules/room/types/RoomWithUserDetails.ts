@@ -4,9 +4,11 @@ type RoomWithUserDetails = {
 	users: [
 		{
 			uid: string;
-			meta?: {
-				firstName: string;
-				lastName: string;
+			firstName: string;
+			lastName: string;
+			logo: {
+				url: string;
+				name: string;
 			};
 			contact: {
 				phone: string;

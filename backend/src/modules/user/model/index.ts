@@ -10,13 +10,11 @@ const userSchema = new Schema<User>(
 			trim: true,
 		},
 		deviceUuid: String,
-		meta: {
-			firstName: String,
-			lastName: String,
-			logo: {
-				url: String,
-				name: String,
-			},
+		firstName: String,
+		lastName: String,
+		logo: {
+			url: String,
+			name: String,
 		},
 		contact: {
 			phone: { type: String, trim: true },
