@@ -45,8 +45,6 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
 
     const messagesList = results?.data || [];
 
-    console.log(messagesList);
-
     return (
         <div ref={ref} className={`${styles.chat_box} overflow-y-auto`}>
             <div className="max-w-lg text-center mx-auto flex flex-col items-center mt-7">

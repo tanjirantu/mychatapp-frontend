@@ -34,7 +34,8 @@ const List: React.FC<MeesageHead> = (props) => {
             <div className="w-full">
                 <div className="flex justify-between items-start">
                     <p className="text-sm">
-                        {props?.users[0]?.contact?.phoneWithDialCode || ''}
+                        {props?.users[0]?.firstName + props.users[0].lastName ||
+                            ''}
                     </p>
                 </div>
             </div>
