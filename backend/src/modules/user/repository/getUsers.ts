@@ -8,17 +8,42 @@ export default async (request: Request, h: ResponseToolkit) => {
 		const limit = request.query?.limit ? request.query.limit : 10;
 		const authUser: any = request.auth.credentials;
 
-		const findQuery = flattenObject({
+		let findQuery = flattenObject({
 			isDeleted: false,
 		});
 
 		findQuery["uid"] = { $ne: authUser.userUid };
 
-		if (request.query.phone) {
-			findQuery["contact.phoneWithDialCode"] = new RegExp(
-				request.query.phone
-			);
+		if (request.query.search) {
+			findQuery = {};
+			findQuery = {
+				$or: [
+					{
+						isDeleted: false,
+						uid: { $ne: authUser.userUid },
+						"contact.phoneWithDialCode": new RegExp(
+							request.query.search
+						),
+					},
+					{
+						isDeleted: false,
+						uid: { $ne: authUser.userUid },
+						firstName: new RegExp(request.query.search, "i"),
+					},
+					{
+						isDeleted: false,
+						uid: { $ne: authUser.userUid },
+						lastName: new RegExp(request.query.search, "i"),
+					},
+				],
+			};
+			// findQuery["contact.phoneWithDialCode"] = new RegExp(
+			// 	request.query.search
+			// );
+			// findQuery["firstName"] = new RegExp(request.query.search, "i");
+			// findQuery["lastName"] = new RegExp(request.query.search, "i");
 		}
+
 		const users = await UserModel.find(findQuery)
 			.sort({ _id: -1 })
 			.skip(skip)

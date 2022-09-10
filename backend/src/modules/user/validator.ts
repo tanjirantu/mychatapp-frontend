@@ -37,7 +37,7 @@ const updateUserPayload = {
 const getUsers = {
 	query: {
 		uid: Joi.string(),
-		phone: Joi.string(),
+		search: Joi.string(),
 		startDate: Joi.date(),
 		endDate: Joi.date(),
 		skip: Joi.number(),
