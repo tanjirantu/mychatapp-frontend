@@ -1,8 +1,8 @@
-import {Request, ResponseToolkit} from "@hapi/hapi";
-import {flattenObject, sendResponse} from "../../../helper";
+import { Request, ResponseToolkit } from "@hapi/hapi";
+import { flattenObject, sendResponse } from "../../../helper";
 import mapOdmEntityToType from "../mapper/mapOdmEntityToType";
 import RoomModel from "../model";
-import {pubClient} from "../../../server/httpServer";
+import { pubClient } from "../../../server/httpServer";
 import MessageModel from "../../message/model";
 
 const getNewMessagesCount = async (roomUid: string, userUid: string) => {
@@ -18,9 +18,7 @@ const getNewMessagesCount = async (roomUid: string, userUid: string) => {
 
 	if (myLastSeenAt) newMessagesFindQuery["createdAt"] = createdAtObj;
 
-	return MessageModel.countDocuments(
-		newMessagesFindQuery
-	);
+	return MessageModel.countDocuments(newMessagesFindQuery);
 };
 
 export default async (request: Request, h: ResponseToolkit) => {
@@ -36,6 +34,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 			},
 			{
 				$project: {
+					_id: 1,
 					uid: 1,
 					users: {
 						$filter: {
@@ -51,7 +50,6 @@ export default async (request: Request, h: ResponseToolkit) => {
 			{ $limit: limit },
 		]);
 
-		console.log(rooms);
 		const messageRooms: any = [];
 
 		for await (const room of rooms) {
@@ -74,7 +72,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 			if (lastMessageResponse)
 				parsedLastMessage = JSON.parse(lastMessageResponse);
 
-			const newMessagesCount = await getNewMessagesCount(
+			const newMessageCount = await getNewMessagesCount(
 				room.uid,
 				authUser.userUid
 			);
@@ -82,8 +80,8 @@ export default async (request: Request, h: ResponseToolkit) => {
 			const updatedMessageRoom = {
 				...room,
 				lastMessage: parsedLastMessage,
-				seenAt,
-				newMessagesCount,
+				lastSeenAt: seenAt,
+				newMessageCount,
 			};
 
 			messageRooms.push(updatedMessageRoom);
