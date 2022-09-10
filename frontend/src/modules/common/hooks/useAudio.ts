@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 
 const useAudio = (url: string) => {
     // create audioRef.current only once
-    const audioRef = useRef<null | HTMLAudioElement>();
+    const audioRef = useRef<null | HTMLAudioElement>(null);
 
     // same as React.Component.forceUpdate
     const [, _forceUpdate] = React.useState(false);
@@ -11,7 +11,6 @@ const useAudio = (url: string) => {
     React.useEffect(() => {
         if (audioRef.current === null) {
             audioRef.current = new Audio(url);
-            audioRef.current.play();
             audioRef.current.addEventListener('play', forceUpdate);
             audioRef.current.addEventListener('pause', forceUpdate);
             audioRef.current.addEventListener('ended', forceUpdate);

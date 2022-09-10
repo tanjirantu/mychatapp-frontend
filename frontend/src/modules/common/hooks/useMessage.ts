@@ -11,38 +11,17 @@ const TYPE_START_EVENT = 'onTypingStarted';
 const TYPE_STOP_EVENT = 'onTypingStopped';
 const SOCKET_SERVER_URL = process.env.NEXT_PUBLIC_SOCKET_URL as string;
 
-type MessageType = {
-    room: {
-        uid: string;
-    };
-    receiver: {
-        uid: string;
-        userType: 'MANUFACTURER';
-        meta: {
-            companyName: string;
-            logo: {
-                url: string;
-                name: string;
-            };
-        };
-    };
-    sender: {
-        uid: string;
-        userType: 'BUYER';
-        meta: {
-            companyName: string;
-            logo: {
-                url: string;
-                name: string;
-            };
-        };
-    };
-
-    content: {
-        message: string;
-        files: File[];
-    };
-    createdAt: string;
+export type MessageType = {
+    roomUid: string;
+    senderUid: string;
+    text: string;
+    files?: File[];
+    replies?: [
+        {
+            text: string;
+            files: File[];
+        }
+    ];
 };
 
 type File = {
@@ -71,11 +50,12 @@ const useMessage = (
                     roomUid,
                 },
             });
+
             // Listens for incoming messages
             socketRef?.current?.on(NEW_MESSAGE_EVENT, (message) => {
                 if (
-                    message.room.uid === roomUid &&
-                    message.receiver.uid === user.userUid
+                    message.roomUid === roomUid &&
+                    message.senderUid !== user.userUid
                 ) {
                     listenMessage(message);
                     playAudio();
@@ -99,30 +79,9 @@ const useMessage = (
     // Sends a message to the server that
     // forwards it to all users in the same room
     //manufacturer
-    const sendMessage = (
-        { message, files }: { message: string; files: File[] },
-        receiverUid: string,
-        meta: {
-            companyName: string;
-            logo: {
-                url: string;
-                name: string;
-            };
-        }
-    ) => {
+    const sendMessage = (message: MessageType) => {
         socketRef.current?.emit(SUBMIT_CHAT_MESSAGE_EVENT, {
-            room: {
-                uid: roomUid,
-            },
-            receiver: {
-                uid: receiverUid,
-                userType: 'MANUFACTURER',
-                meta: meta,
-            },
-            content: {
-                message: message,
-                files: files,
-            },
+            ...message,
         });
     };
 

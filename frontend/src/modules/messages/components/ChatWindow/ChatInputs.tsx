@@ -14,6 +14,7 @@ import Dropdown from '../../../common/components/Dropdown';
 import { getFileType } from '../../../../helpers/utils';
 import useDebounce from '../../../common/hooks/useDebounce';
 import createDOMPurify from 'dompurify';
+import { MessageType } from '../../../common/hooks/useMessage';
 
 const NoSSRPicker = dynamic(
     () => {
@@ -27,13 +28,7 @@ const NoSSRPicker = dynamic(
 
 interface ChatInputProps {
     scrollToBottom: (type: 'smooth' | 'auto') => void;
-    onChatSubmit: (
-        {
-            message,
-            files,
-        }: { message: string; files: { url: string; name: string }[] },
-        receiverUid: string
-    ) => void;
+    onChatSubmit: (message: MessageType) => void;
 
     startTyping: (userUid: string) => void;
     stopTyping: (userUid: string) => void;
@@ -97,20 +92,22 @@ const ChatInputs: React.FC<ChatInputProps> = ({
         }
         if (message || filesWithFileType?.length) {
             flushSync(() => {
-                onChatSubmit(
-                    { message, files: [...filesWithFileType] },
-                    activeMessagehead?.users[0].uid || '',
-                    activeMessagehead.users[0].meta
-                );
+                onChatSubmit({
+                    roomUid: activeMessagehead.uid || '',
+                    text: message,
+                    files: files,
+                    senderUid: user?.uid || '',
+                });
+
                 dispatch(
                     setStoreMessage({
                         data: {
                             uid: new Date().toISOString(),
-                            roomUid: activeMessagehead.uid,
                             files: [...filesWithFileType],
                             text: message,
-
+                            roomUid: activeMessagehead.uid,
                             senderUid: user?.uid || '',
+
                             createdAt: new Date().toISOString(),
                         },
                         params: {

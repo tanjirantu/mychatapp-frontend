@@ -41,15 +41,14 @@ const ChatWindow = () => {
                 dispatch(
                     setMessage({
                         data: {
+                            roomUid: message.roomUid,
                             uid: new Date().toISOString(),
-                            _id: new Date().toISOString(),
-                            content: message.content,
-                            sender: message.sender,
-                            receiver: message.receiver,
-                            createdAt: message.createdAt,
+                            text: message.text,
+                            senderUid: message.senderUid,
+                            createdAt: new Date().toISOString(),
                         },
                         params: {
-                            uid: message.sender.uid || '',
+                            uid: message.senderUid || '',
                         },
                     })
                 );
@@ -77,7 +76,7 @@ const ChatWindow = () => {
         },
 
         params: {
-            receiverUid: receiverUid || '',
+            receiverUid: activeMessagehead?.uid || '',
             searchText: debouncedSearch,
             limit: 10,
             skip: 0,

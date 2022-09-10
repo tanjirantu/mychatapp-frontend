@@ -45,6 +45,8 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
 
     const messagesList = results?.data || [];
 
+    console.log(messagesList);
+
     return (
         <div ref={ref} className={`${styles.chat_box} overflow-y-auto`}>
             <div className="max-w-lg text-center mx-auto flex flex-col items-center mt-7">
@@ -77,18 +79,15 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                 >
                     <div className="flex gap-5 flex-col">
                         {messagesList.map((message) => {
-                            if (message.sender.uid === data?.uid) {
+                            if (message.senderUid === data?.uid) {
                                 return (
                                     <RightChatText
                                         date={message.createdAt}
-                                        name="tusher"
-                                        url={
-                                            message.sender?.meta?.logo?.url ||
-                                            ''
-                                        }
-                                        key={message._id}
-                                        message={message.content.message}
-                                        files={message?.content?.files || []}
+                                        name=""
+                                        url={''}
+                                        key={message.uid}
+                                        message={message.text}
+                                        files={message?.files || []}
                                     />
                                 );
                             }
@@ -96,11 +95,11 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                             return (
                                 <LeftChatText
                                     date={message.createdAt}
-                                    name="tusher"
-                                    url={message.sender?.meta?.logo?.url || ''}
-                                    key={message._id}
-                                    message={message.content.message}
-                                    files={message?.content?.files || []}
+                                    name=""
+                                    url={''}
+                                    key={message.uid}
+                                    message={message.text}
+                                    files={message?.files || []}
                                 />
                             );
                         })}
