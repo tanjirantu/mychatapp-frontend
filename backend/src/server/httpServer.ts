@@ -139,7 +139,8 @@ const StartServer = async () => {
 	io.on("connection", async (socket: any) => {
 		try {
 			const authToken = socket?.handshake?.auth?.token;
-			const authUser = getAuthUserFromToken(authToken);
+			const authUser: any = getAuthUserFromToken(authToken);
+			console.log(`New user connected!`, authUser.userUid);
 
 			const myRooms = await getRooms(authUser);
 
