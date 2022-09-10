@@ -1,8 +1,8 @@
-import {Request, ResponseToolkit} from "@hapi/hapi";
-import {flattenObject, sendResponse} from "../../../helper";
+import { Request, ResponseToolkit } from "@hapi/hapi";
+import { flattenObject, sendResponse } from "../../../helper";
 import mapOdmEntityToType from "../mapper/mapOdmEntityToType";
 import RoomModel from "../model";
-import {pubClient} from "../../../server/httpServer";
+import { pubClient } from "../../../server/httpServer";
 import MessageModel from "../../message/model";
 
 const getNewMessagesCount = async (roomUid: string, userUid: string) => {
@@ -18,9 +18,7 @@ const getNewMessagesCount = async (roomUid: string, userUid: string) => {
 
 	if (myLastSeenAt) newMessagesFindQuery["createdAt"] = createdAtObj;
 
-	return MessageModel.countDocuments(
-		newMessagesFindQuery
-	);
+	return MessageModel.countDocuments(newMessagesFindQuery);
 };
 
 export default async (request: Request, h: ResponseToolkit) => {
@@ -93,11 +91,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 
 		return h
 			.response(
-				sendResponse(
-					{ rooms: messageRooms.map(mapOdmEntityToType), count },
-					200,
-					"SUCCESS"
-				)
+				sendResponse({ rooms: rooms, count: count }, 200, "SUCCESS")
 			)
 			.code(200);
 	} catch (exp: any) {
