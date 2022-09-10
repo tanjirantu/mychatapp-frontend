@@ -3,7 +3,7 @@ import { RoomCreateInput } from "../types";
 import { sendResponse, sendErrorResponse } from "../../../helper";
 import generateRoomUid from "./generateRoomUid";
 import RoomModel from "../model";
-import UserModel from "../../user/model"
+import UserModel from "../../user/model";
 
 export default async (request: Request, h: ResponseToolkit) => {
 	try {
@@ -13,12 +13,12 @@ export default async (request: Request, h: ResponseToolkit) => {
 		payload.uid = uid;
 
 		payload.users.push(authUser.userUid);
-		const users = await UserModel.find({uid: {$in: payload.users}});
+		const users = await UserModel.find({ uid: { $in: payload.users } });
 
 		const roomCreateInput = {
 			...payload,
-			users
-		}
+			users,
+		};
 
 		const room = await RoomModel.create(roomCreateInput);
 

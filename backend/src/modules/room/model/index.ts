@@ -13,15 +13,17 @@ const roomSchema = new Schema<Room>(
 		users: [
 			{
 				uid: String,
-				meta: {
-					firstName: String,
-					lastName: String,
+				firstName: String,
+				lastName: String,
+				logo: {
+					url: String,
+					name: String,
 				},
 				contact: {
 					phone: String,
 					dialCode: String,
-					phoneWithDialCode: String
-				}
+					phoneWithDialCode: String,
+				},
 			},
 		],
 		isDeleted: { type: Boolean, default: false },

@@ -6,7 +6,9 @@ const mapOdmEntityToType = (room: RoomWithUserDetails) => {
 		label: room?.label,
 		users: room.users.map((user) => ({
 			uid: user.uid,
-			meta: user?.meta,
+			firsName: user?.firstName,
+			lastName: user?.lastName,
+			logo: user?.logo,
 			contact: {
 				phone: user.contact.phone,
 				dialCode: user.contact.dialCode,

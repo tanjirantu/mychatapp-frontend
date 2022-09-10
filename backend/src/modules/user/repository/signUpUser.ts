@@ -34,10 +34,8 @@ export default async (request: Request, h: ResponseToolkit) => {
 			const newUser = {
 				uid,
 				deviceUuid: payload.deviceUuid,
-				meta: {
-					firstName: payload.firstName,
-					lastName: payload.lastName,
-				},
+				firstName: payload.firstName,
+				lastName: payload.lastName,
 				contact: {
 					phone: payload.phone,
 					dialCode: payload.dialCode,
