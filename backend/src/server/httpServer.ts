@@ -40,15 +40,14 @@ const validateJwt = async (
 };
 
 const getRooms = async (authUser: AuthUser) => {
-	const findQuery = { users: authUser.userUid, isDeleted: false };
+	const findQuery = { "users.uid": authUser.userUid, isDeleted: false };
 	const selectedFields = { uid: 1, _id: 0 };
-	return await RoomModel.find(findQuery, selectedFields);
+	return RoomModel.find(findQuery, selectedFields);
 };
 
 const createMessage = async (payload: MessageCreateInput) => {
 	const uid = await generateMessageUid();
-	const result = await MessageModel.create({ uid, ...payload });
-	return result;
+	return MessageModel.create({ uid, ...payload });
 };
 
 const updateLastSeen = async (lastSeen: LastSeenCreateInput) => {
@@ -132,7 +131,6 @@ const StartServer = async () => {
 		console.log("ERR: Server Plugin - ", err);
 	}
 
-	// const io = require("socket.io")(server.listener);
 	const io = new Server(server.listener, { cors: { origin: "*" } });
 	Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
 		io.adapter(createAdapter(pubClient, subClient));
@@ -149,7 +147,6 @@ const StartServer = async () => {
 			const myRoomUids: any = myRooms.map((room) => room.uid);
 			myRoomUids.push(authUser);
 			socket.join(myRoomUids);
-
 			socket.broadcast.emit("onUserOnline", {
 				userUid: authUser.userUid,
 				isOnline: true,
