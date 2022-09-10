@@ -39,6 +39,7 @@ const messageSchema = new Schema<Message>(
 	}
 );
 
+messageSchema.index({ createdAt: -1 });
 const MessageModel = model<Message>("Message", messageSchema);
 
 export default MessageModel;
