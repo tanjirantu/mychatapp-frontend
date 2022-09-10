@@ -1,5 +1,5 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import BuyerModel from "../model";
+import UserModel from "../model";
 import { User } from "../types";
 import {
 	sendResponse,
@@ -10,20 +10,23 @@ import {
 export default async (request: Request, h: ResponseToolkit) => {
 	try {
 		const payload: User = request.payload as User;
-		let uid: string = request.params.uid;
+		const authUser: any = request.auth.credentials;
+		let uid: string = authUser.userUid;
 
 		const updatedPayload = flattenObject(payload);
-		const buyer = await BuyerModel.findOneAndUpdate(
+		const user = await UserModel.findOneAndUpdate(
 			{ uid, isDeleted: false },
 			{
 				$set: updatedPayload,
 			},
 			{ new: true }
 		);
-		if (!buyer)
+
+		if (!user) {
 			return h.response(sendErrorResponse("DATA_NOT_FOUND")).code(200);
-		if (payload.isActive === false || payload.isActive)
-			return h.response(sendResponse(buyer, 204, "UPDATED")).code(200);
+		}
+
+		return h.response(sendResponse(user, 204, "UPDATED")).code(200);
 	} catch (exp: any) {
 		return h
 			.response({

@@ -45,15 +45,19 @@ export default [
 		},
 		handler: getUserByUid,
 	},
-	// {
-	// 	method: "GET",
-	// 	path: "/user/me",
-	// 	options: {
-	// 		tags: ["Api", "User Profile"],
-	// 		description: "User Profile",
-	// 	},
-	// 	handler: getBuyerProfile,
-	// },
+	{
+		method: "PUT",
+		path: "/user/me",
+		options: {
+			auth: {
+				strategy: "jwt",
+			},
+			tags: ["Api", "User Profile"],
+			description: "User Profile",
+			validate: validator.updateUser,
+		},
+		handler: updateUser,
+	},
 	{
 		method: "POST",
 		path: "/user-signup",
@@ -74,14 +78,14 @@ export default [
 		},
 		handler: signInUser,
 	},
-	{
-		method: "PUT",
-		path: "/users/{uid}",
-		options: {
-			tags: ["Api", "User"],
-			description: "Update User",
-			validate: validator.updateUser,
-		},
-		handler: updateUser,
-	},
+	// {
+	// 	method: "PUT",
+	// 	path: "/users/{uid}",
+	// 	options: {
+	// 		tags: ["Api", "User"],
+	// 		description: "Update User",
+	// 		validate: validator.updateUser,
+	// 	},
+	// 	handler: updateUser,
+	// },
 ];
