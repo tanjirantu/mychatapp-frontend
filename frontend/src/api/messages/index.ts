@@ -57,12 +57,13 @@ export const getAllMessagesByRoomUidQuery = async (params: {
     limit?: number;
 }) => {
     try {
+        const { receiverUid, ...rest } = params;
         const response = await http.get<
             IApiResponse<{
                 messages: Message[];
                 count: number;
             }>
-        >(`/messages?${getUrlParams(params)}`);
+        >(`/messages/${receiverUid}?${getUrlParams(rest)}`);
         return response.data;
     } catch (error) {
         throw new Error('Network response was not ok');

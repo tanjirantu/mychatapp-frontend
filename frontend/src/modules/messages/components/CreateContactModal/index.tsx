@@ -72,7 +72,7 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
                         })
                     );
 
-                    // dispatch(setActiveHeads(response.result));
+                    dispatch(setActiveHeads(response.result));
                 }
 
                 onClose();
