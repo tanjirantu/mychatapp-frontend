@@ -15,6 +15,7 @@ const mapOdmEntityToType = (room: RoomWithUserDetails) => {
 		})),
 		lastSeenAt: room?.lastSeenAt,
 		lastMessage: room?.lastMessage,
+		newMessageCount: room?.newMessageCount || 0,
 	};
 };
 

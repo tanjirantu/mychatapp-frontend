@@ -169,6 +169,11 @@ const StartServer = async () => {
 
 			socket.on("onMessageWindowChange", (data: LastSeenCreateInput) => {
 				updateLastSeen(data);
+				updateRedisHashmap({
+					uid: `${data.roomUid}:${authUser.userUid}`,
+					key: "lastSeenAt",
+					data: JSON.stringify(new Date().toUTCString()),
+				});
 			});
 
 			socket.on("onMessageSubmit", (data: MessageCreateInput) => {

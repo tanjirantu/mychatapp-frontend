@@ -34,6 +34,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 			},
 			{
 				$project: {
+					_id: 1,
 					uid: 1,
 					users: {
 						$filter: {
@@ -49,7 +50,6 @@ export default async (request: Request, h: ResponseToolkit) => {
 			{ $limit: limit },
 		]);
 
-		console.log(rooms);
 		const messageRooms: any = [];
 
 		for await (const room of rooms) {
@@ -72,7 +72,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 			if (lastMessageResponse)
 				parsedLastMessage = JSON.parse(lastMessageResponse);
 
-			const newMessagesCount = await getNewMessagesCount(
+			const newMessageCount = await getNewMessagesCount(
 				room.uid,
 				authUser.userUid
 			);
@@ -80,8 +80,8 @@ export default async (request: Request, h: ResponseToolkit) => {
 			const updatedMessageRoom = {
 				...room,
 				lastMessage: parsedLastMessage,
-				seenAt,
-				newMessagesCount,
+				lastSeenAt: seenAt,
+				newMessageCount,
 			};
 
 			messageRooms.push(updatedMessageRoom);

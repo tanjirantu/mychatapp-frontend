@@ -1,5 +1,6 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { sendResponse } from "../../../helper";
+import { pubClient } from "../../../server/httpServer";
 import MessageModel from "../model";
 
 export default async (request: Request, h: ResponseToolkit) => {
@@ -12,6 +13,12 @@ export default async (request: Request, h: ResponseToolkit) => {
 
 		if (request.query.skip) skip = request.query.skip;
 		if (request.query.limit) skip = request.query.limit;
+
+		await pubClient.hSet(
+			`${roomUid}:${authUser.userUid}`,
+			"lastSeenAt",
+			JSON.stringify(new Date().toUTCString())
+		);
 
 		const messages = await MessageModel.find({ roomUid });
 
