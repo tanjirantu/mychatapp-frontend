@@ -142,11 +142,12 @@ const StartServer = async () => {
 			const authToken = socket?.handshake?.auth?.token;
 			const authUser = getAuthUserFromToken(authToken);
 
-			console.log(`New user connected!`, authUser.userUid);
-
 			const myRooms = await getRooms(authUser);
+
+			console.log("myroom", myRooms);
+
 			const myRoomUids: any = myRooms.map((room) => room.uid);
-			myRoomUids.push(authUser.userUid);
+			myRoomUids.push(authUser);
 			socket.join(myRoomUids);
 
 			socket.broadcast.emit("onUserOnline", {

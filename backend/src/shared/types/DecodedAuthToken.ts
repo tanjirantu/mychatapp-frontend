@@ -16,6 +16,4 @@ export type AuthUser = {
 	};
 };
 
-export type DecodedAuthToken = {
-	data: AuthUser;
-};
+export type DecodedAuthToken = AuthUser;
