@@ -17,6 +17,8 @@ import { SignUpInput } from '../../../api/auth/types/SignUpInput';
 import { setToken } from '../../../libs/authClient';
 import toast, { Toaster } from 'react-hot-toast';
 import Toast from '../../common/components/Toast';
+import TextInput from '../../common/components/TextInput';
+import { validateForm } from '../../../helpers/utils';
 
 type CountryData = {
     dialCode: string;
@@ -46,6 +48,18 @@ const SignUpComponent = () => {
         },
     });
 
+    const [state, setState] = useState({
+        firstName: '',
+        lastName: '',
+    });
+
+    const [formError, setFormError] = useState<any>({});
+
+    const handleChange = (key: string, value: any) => {
+        setState({ ...state, [key]: value });
+        setFormError({ ...formError, [key]: false });
+    };
+
     const onOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setOtp(e.target.value);
     };
@@ -62,11 +76,15 @@ const SignUpComponent = () => {
             phone: phone.split(dialCode)[1],
         };
 
-        if (contact.phone === '') return setPhoneError('error');
-        const { deviceUuid } = await getOtp(otpInput);
-        if (deviceUuid) {
-            setDeviceUuid(deviceUuid);
-            setIsOtpModalOpen(true);
+        const formError = validateForm(state);
+        setFormError(formError);
+        if (Object.keys(formError).length === 0) {
+            if (contact.phone === '') return setPhoneError('error');
+            const { deviceUuid } = await getOtp(otpInput);
+            if (deviceUuid) {
+                setDeviceUuid(deviceUuid);
+                setIsOtpModalOpen(true);
+            }
         }
     };
 
@@ -81,6 +99,8 @@ const SignUpComponent = () => {
             deviceUuid,
             dialCode,
             phone: phone.split(dialCode)[1],
+            firstName: state.firstName,
+            lastName: state.lastName,
         };
         const response = await signUp(signUpInput);
         if (response) {
@@ -112,7 +132,7 @@ const SignUpComponent = () => {
                         <div className="text-4xl font-bold leading-normal tracking-normal not-italic text-black">
                             Get Started
                         </div>
-                        <div className="flex items-center mb-5 mt-2">
+                        <div className="flex items-center mb-10 mt-2">
                             <div className="mr-1 text-lg font-medium">
                                 Already have an account?
                             </div>
@@ -124,6 +144,30 @@ const SignUpComponent = () => {
                         </div>
                         <form onSubmit={onLoginBtnSubmit}>
                             <div className="mb-7">
+                                <TextInput
+                                    className="mb-8"
+                                    label="First Name"
+                                    value={state.firstName}
+                                    error={formError.firstName}
+                                    onChange={(evnt) =>
+                                        handleChange(
+                                            'firstName',
+                                            evnt.target.value
+                                        )
+                                    }
+                                />
+                                <TextInput
+                                    className="mb-8"
+                                    label="Last Name"
+                                    value={state.lastName}
+                                    error={formError.lastName}
+                                    onChange={(evnt) =>
+                                        handleChange(
+                                            'lastName',
+                                            evnt.target.value
+                                        )
+                                    }
+                                />
                                 <PhoneInput
                                     inputStyle={{
                                         backgroundColor: '#F7F7F7',

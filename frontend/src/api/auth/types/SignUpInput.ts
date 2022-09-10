@@ -3,4 +3,6 @@ export type SignUpInput = {
     deviceUuid: string;
     dialCode: string;
     phone: string;
+    firstName: string;
+    lastName: string;
 };
