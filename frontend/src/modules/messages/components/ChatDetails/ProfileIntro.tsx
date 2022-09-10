@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../../../common/components/Button';
 import UserAvatar from '../../../common/components/UserAvatar';
 
 import styles from './ChatDetails.module.scss';
@@ -17,12 +16,6 @@ const ProfileIntro = () => {
                     className="border"
                     src={'/static/assets/images/avatar.png'}
                 />
-
-                <div className="flex justify-center gap-2">
-                    <Button className="mt-6" size="md">
-                        Create new contact
-                    </Button>
-                </div>
             </div>
         </>
     );

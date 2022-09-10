@@ -17,8 +17,9 @@ const ChatHeader: React.FC<IChatHeader> = ({ onSearch }) => {
         >
             <div className="self-center">
                 <h5 className="text-dh-gray-800 ">
-                    {activeMessagehead?.users[0]?.contact?.phoneWithDialCode ||
-                        ''}{' '}
+                    {activeMessagehead?.users[0].firstName +
+                        ' ' +
+                        activeMessagehead?.users[0].lastName}
                 </h5>
                 <span className="text-dh-gray-700">
                     {activeMessagehead?.seenAt

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PhoneInput, { CountryData } from 'react-phone-input-2';
 import Dialog from '../Dialog';
 
 import 'react-phone-input-2/lib/style.css';
@@ -13,11 +12,6 @@ import {
 } from '../../../../reducers/messageReducer';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import TextInput from '../TextInput';
-
-type PhoneInput = {
-    phone: string;
-    countryData: CountryData;
-};
 
 interface ICreateContactModal {
     onClose: () => void;
@@ -53,19 +47,18 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
             });
 
             if (response.statusCode === 200) {
-                if (messageHeads.results.length) {
-                    const _messageHeads = messageHeads.results.filter(
-                        (data) => data.uid !== response.result.uid
-                    );
-                    dispatch(
-                        setMessageHeads({
-                            results: [response.result, ..._messageHeads],
-                            count: messageHeads.count,
-                        })
-                    );
+                const _messageHeads = messageHeads.results.filter(
+                    (data) => data.uid !== response.result.uid
+                );
 
-                    dispatch(setActiveHeads(response.result));
-                }
+                dispatch(
+                    setMessageHeads({
+                        results: [response.result, ..._messageHeads],
+                        count: messageHeads.count,
+                    })
+                );
+
+                dispatch(setActiveHeads(response.result));
 
                 onClose();
             }
@@ -93,7 +86,7 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
                     <div className=" mb-2 mt-6">
                         <TextInput
                             className="mt-8"
-                            label="Search by Name or Number"
+                            label="Search"
                             value={search}
                             onChange={(event) => setSearch(event.target.value)}
                         />
@@ -101,10 +94,10 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
                 </div>
 
                 {data?.result.users.length && isFetching !== true ? (
-                    <h5 className="mb-2">Select Contact </h5>
+                    <h5 className="mb-2 mt-4">Select Contact </h5>
                 ) : null}
 
-                <div>
+                <div className="flex gap-2 flex-col">
                     {data?.result.users.map((user) => {
                         return (
                             <div
@@ -113,12 +106,20 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
                                 className="bg-gray-100 flex gap-3 hover:bg-opacity-100 items-center cursor-pointer select-none px-3 py-2 bg-opacity-60 rounded-md "
                             >
                                 <UserAvatar
-                                    height={35}
-                                    width={35}
+                                    className="border"
+                                    height={40}
+                                    width={40}
                                     src="/static/assets/images/avatar.png"
                                     name=""
                                 />
-                                <h4>{user.contact.phoneWithDialCode}</h4>
+                                <div>
+                                    <p className="text-base ">
+                                        {user.firstName + ' ' + user.lastName}
+                                    </p>
+                                    <p className="text-sm text-dh-gray-700">
+                                        {user.contact.phoneWithDialCode}
+                                    </p>
+                                </div>
                             </div>
                         );
                     })}
