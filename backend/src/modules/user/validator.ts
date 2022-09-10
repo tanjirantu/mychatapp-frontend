@@ -18,20 +18,12 @@ const createUserPayload = {
 };
 
 const updateUserPayload = {
-	password: Joi.string(),
-	meta: Joi.object({
-		firstName: Joi.string(),
-		lastName: Joi.string(),
-		companyName: Joi.string(),
-		logo: {
-			url: Joi.string(),
-			name: Joi.string(),
-		},
-	}),
-	contact: Joi.object({
-		phone: Joi.string().required(),
-		dialCode: Joi.string().required(),
-	}),
+	firstName: Joi.string(),
+	lastName: Joi.string(),
+	logo: {
+		url: Joi.string(),
+		name: Joi.string(),
+	},
 };
 
 const getUsers = {
@@ -78,15 +70,7 @@ const createUser = {
 };
 
 const updateUser = {
-	params: {
-		uid: Joi.string()
-			.regex(/^[-a-zA-Z0-9]{0,12}$/)
-			.required(),
-	},
 	payload: {
-		uid: Joi.string()
-			.regex(/^[-a-zA-Z0-9]{0,12}$/)
-			.required(),
 		...updateUserPayload,
 	},
 };
