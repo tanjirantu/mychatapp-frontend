@@ -29,18 +29,6 @@ export default async (request: Request, h: ResponseToolkit) => {
 		const authUser: any = request.auth.credentials;
 		const findQuery = { "users.uid": authUser.userUid };
 		const rooms = await RoomModel.aggregate([
-			// {
-			// 	$project: {
-
-			// 		fullName: {
-			// 			$concat: [
-			// 				"users.meta.firstName",
-			// 				" ",
-			// 				"users.meta.lastName",
-			// 			],
-			// 		},
-			// 	},
-			// },
 			{
 				$match: findQuery,
 			},
