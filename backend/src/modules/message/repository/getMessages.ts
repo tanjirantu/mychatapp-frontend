@@ -20,13 +20,13 @@ export default async (request: Request, h: ResponseToolkit) => {
 			.skip(skip)
 			.limit(limit);
 
-		const reversedMessagesArray = messages.reverse();
+		// const reversedMessagesArray = messages.reverse();
 
 		return h
 			.response(
 				sendResponse(
 					{
-						messages: reversedMessagesArray,
+						messages,
 						count,
 					},
 					200,
