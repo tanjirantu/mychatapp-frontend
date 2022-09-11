@@ -17,6 +17,7 @@ const messageSchema = new Schema<Message>(
 				url: String,
 				originalFileName: String,
 				generatedFileName: String,
+				fileType: String,
 			},
 		],
 		replies: [
@@ -27,6 +28,7 @@ const messageSchema = new Schema<Message>(
 						url: String,
 						originalFileName: String,
 						generatedFileName: String,
+						fileType: String,
 					},
 				],
 			},
