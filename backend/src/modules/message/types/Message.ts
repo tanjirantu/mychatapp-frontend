@@ -2,6 +2,7 @@ export type File = {
 	url: string;
 	orginalFileName: string;
 	generatedFileName: string;
+	fileType: string;
 };
 
 type Message = {

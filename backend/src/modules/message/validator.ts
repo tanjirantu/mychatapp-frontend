@@ -5,6 +5,7 @@ const getMessages = {
 		roomUid: Joi.string(),
 	},
 	query: {
+		includeOnly: Joi.string(),
 		text: Joi.string(),
 		skip: Joi.string(),
 		limit: Joi.string(),

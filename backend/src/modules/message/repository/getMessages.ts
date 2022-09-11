@@ -1,5 +1,5 @@
 import { Request, ResponseToolkit } from "@hapi/hapi";
-import { sendResponse } from "../../../helper";
+import { flattenObject, sendResponse } from "../../../helper";
 import { pubClient } from "../../../server/httpServer";
 import MessageModel from "../model";
 
@@ -14,18 +14,29 @@ export default async (request: Request, h: ResponseToolkit) => {
 		if (request.query.skip) skip = request.query.skip;
 		if (request.query.limit) skip = request.query.limit;
 
+		const findQuery = flattenObject({ roomUid: roomUid });
+
+		if (request.query && request.query.includeOnly) {
+			const fileTypes = request.query.includeOnly.split(",");
+			if (fileTypes.length) {
+				findQuery["files.fileType"] = {
+					$in: fileTypes,
+				};
+			}
+		}
+
 		await pubClient.hSet(
 			`${roomUid}:${authUser.userUid}`,
 			"lastSeenAt",
 			JSON.stringify(new Date().toUTCString())
 		);
 
-		const messages = await MessageModel.find({ roomUid });
-
-		const count = await MessageModel.countDocuments({ roomUid })
+		const messages = await MessageModel.find(findQuery)
 			.sort({ _id: -1 })
 			.skip(skip)
 			.limit(limit);
+
+		const count = await MessageModel.countDocuments(findQuery);
 
 		// const reversedMessagesArray = messages.reverse();
 
