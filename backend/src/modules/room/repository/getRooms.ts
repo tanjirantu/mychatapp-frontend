@@ -32,7 +32,6 @@ export default async (request: Request, h: ResponseToolkit) => {
 			{
 				$match: findQuery,
 			},
-			{ $sort: { _id: -1 } },
 			{
 				$project: {
 					_id: 1,
@@ -46,6 +45,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 					},
 				},
 			},
+			{ $sort: { _id: -1 } },
 			{ $skip: skip },
 			{ $limit: limit },
 		]);
@@ -91,7 +91,11 @@ export default async (request: Request, h: ResponseToolkit) => {
 
 		return h
 			.response(
-				sendResponse({ rooms: rooms, count: count }, 200, "SUCCESS")
+				sendResponse(
+					{ rooms: messageRooms, count: count },
+					200,
+					"SUCCESS"
+				)
 			)
 			.code(200);
 	} catch (exp: any) {
