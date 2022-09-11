@@ -95,7 +95,7 @@ const ChatInputs: React.FC<ChatInputProps> = ({
                 onChatSubmit({
                     roomUid: activeMessagehead.uid || '',
                     text: message,
-                    files: files,
+                    files: [...filesWithFileType],
                     senderUid: user?.uid || '',
                 });
 

@@ -41,6 +41,7 @@ const ChatWindow = () => {
                 dispatch(
                     setMessage({
                         data: {
+                            files: message.files,
                             roomUid: message.roomUid,
                             uid: new Date().toISOString(),
                             text: message.text,
@@ -155,6 +156,7 @@ const ChatWindow = () => {
                         setFilter({ searchText: value });
                     }}
                 />
+
                 <ChatBox
                     isTyping={isTyping}
                     filter={{

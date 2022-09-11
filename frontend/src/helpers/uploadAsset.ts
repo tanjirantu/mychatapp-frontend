@@ -16,7 +16,7 @@ const uploadAsset = async (file: File) => {
         return {
             isError: false,
             filename: name,
-            url: `${process.env.SPACES_URL}/${name}`,
+            url: `${process.env.NEXT_PUBLIC_SPACES_URL}/${name}`,
         };
     } catch (error) {
         return {

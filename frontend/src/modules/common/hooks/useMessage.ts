@@ -80,6 +80,7 @@ const useMessage = (
     // forwards it to all users in the same room
     //manufacturer
     const sendMessage = (message: MessageType) => {
+        console.log('send', message);
         socketRef.current?.emit(SUBMIT_CHAT_MESSAGE_EVENT, {
             ...message,
         });

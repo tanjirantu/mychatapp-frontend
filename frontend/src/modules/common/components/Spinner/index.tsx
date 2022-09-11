@@ -1,8 +1,8 @@
-import { MoonLoader } from 'react-spinners';
-const Spinner = ({ size = 24 }) => {
+import { FadeLoader } from 'react-spinners';
+const Spinner = () => {
     return (
         <div className="w-full flex justify-center items-center mt-40">
-            <MoonLoader size={size} color="#27a88b" />
+            <FadeLoader color="#27a88b" />
         </div>
     );
 };

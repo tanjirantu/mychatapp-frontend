@@ -89,26 +89,24 @@ const SharedFile = () => {
                 >
                     <>
                         {results?.data?.map((message) => {
-                            return message?.content?.files?.map(
-                                (data, index) => {
-                                    return (
-                                        <a
-                                            rel="noreferrer"
-                                            href={data?.url}
-                                            target="_blank"
-                                            key={message.uid + index}
-                                            className="font-medium text-dh-gray-700 mb-3 flex gap-2 cursor-pointer hover:bg-dh-gray-400 p-1"
-                                        >
-                                            {data?.fileType === 'pdf' ? (
-                                                <img src={PDF_THUMB} alt="" />
-                                            ) : (
-                                                <img src={WORD_THUMB} alt="" />
-                                            )}
-                                            <p>{data?.originalFilename}</p>
-                                        </a>
-                                    );
-                                }
-                            );
+                            return message?.files?.map((data, index) => {
+                                return (
+                                    <a
+                                        rel="noreferrer"
+                                        href={data?.url}
+                                        target="_blank"
+                                        key={message.uid + index}
+                                        className="font-medium text-dh-gray-700 mb-3 flex gap-2 cursor-pointer hover:bg-dh-gray-400 p-1"
+                                    >
+                                        {data?.fileType === 'pdf' ? (
+                                            <img src={PDF_THUMB} alt="" />
+                                        ) : (
+                                            <img src={WORD_THUMB} alt="" />
+                                        )}
+                                        <p>{data?.originalFilename}</p>
+                                    </a>
+                                );
+                            });
                         })}
                     </>
                 </InfiniteScroll>

@@ -7,6 +7,7 @@ import { useAppSelector } from '../../../common/hooks';
 import getUrlParams from '../../../../helpers/utils/getUrlParams';
 import InfiniteScroll from '../../../common/components/InfiniteScroll';
 import UserTyping from './UserTyping';
+import Spinner from '../../../common/components/Spinner';
 
 type ChatProps = {
     scrollToBottom: (behaviour: 'smooth' | 'auto') => void;
@@ -44,6 +45,22 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
     }, [results, ref]);
 
     const messagesList = results?.data || [];
+
+    if (isLoading === true && messagesList.length === 0) {
+        return (
+            <div className="h-full">
+                <Spinner />
+            </div>
+        );
+    }
+
+    if (!activeMessagehead?.uid) {
+        return (
+            <div className="h-full flex justify-center items-center">
+                <h3>No chat room is available</h3>
+            </div>
+        );
+    }
 
     return (
         <div ref={ref} className={`${styles.chat_box} overflow-y-auto`}>

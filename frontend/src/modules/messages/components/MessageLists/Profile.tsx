@@ -7,12 +7,7 @@ const Profile = () => {
 
     return (
         <div className={`h-20 items-center  px-5 flex ${styles.profile}`}>
-            <UserAvatar
-                width={50}
-                height={50}
-                name="Tusher"
-                src={'/static/assets/images/avatar.png'}
-            />
+            <UserAvatar width={50} height={50} name="Tusher" src={''} />
             <h4>{data?.meta?.companyName || ''}</h4>
         </div>
     );

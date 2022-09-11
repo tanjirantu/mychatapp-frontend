@@ -86,22 +86,20 @@ const SharedMedia = () => {
                 >
                     <>
                         {results?.data?.map((message) => {
-                            return message?.content?.files?.map(
-                                (data, index) => {
-                                    return (
-                                        <div
-                                            key={message?.uid + index}
-                                            className="w-20 h-24 overflow-hidden rounded  relative border-2"
-                                        >
-                                            <img
-                                                className="absolute min-w-full min-h-full object-cover"
-                                                src={data?.url || ''}
-                                                alt=""
-                                            />
-                                        </div>
-                                    );
-                                }
-                            );
+                            return message?.files?.map((data, index) => {
+                                return (
+                                    <div
+                                        key={message?.uid + index}
+                                        className="w-20 h-24 overflow-hidden rounded  relative border-2"
+                                    >
+                                        <img
+                                            className="absolute min-w-full min-h-full object-cover"
+                                            src={data?.url || ''}
+                                            alt=""
+                                        />
+                                    </div>
+                                );
+                            });
                         })}
                     </>
                 </InfiniteScroll>
