@@ -6,7 +6,7 @@ import routes from "../plugin/router";
 import Jwt from "hapi-auth-jwt2";
 import { HttpServerConfiguration } from "../config";
 import UserModel from "../modules/user/model";
-import { Server } from "socket.io";
+// import { Server } from "socket.io";
 import { getAuthUserFromToken } from "../helper";
 import RoomModel from "../modules/room/model";
 import { AuthUser } from "../shared/types/DecodedAuthToken";
@@ -131,7 +131,9 @@ const StartServer = async () => {
 		console.log("ERR: Server Plugin - ", err);
 	}
 
-	const io = new Server(server.listener, { cors: { origin: "*" } });
+	var io = require("socket.io")(server.listener, {
+		cors: { origin: "*" },
+	});
 	Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
 		io.adapter(createAdapter(pubClient, subClient));
 	});

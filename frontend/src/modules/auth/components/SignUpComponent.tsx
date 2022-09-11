@@ -203,7 +203,7 @@ const SignUpComponent = () => {
                                 loading={false}
                                 type="submit"
                             >
-                                Sign In
+                                Sign Up
                             </Button>
                         </form>
                         <div className="text-xs font-medium mt-6 text-dh-gray-600 tracking-wider text-center leading-snug">

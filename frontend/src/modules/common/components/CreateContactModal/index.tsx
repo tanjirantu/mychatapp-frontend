@@ -32,7 +32,7 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
     const { isFetching, data } = useGetUsersQuery(
         {
             params: {
-                phone: value ? value : '',
+                search: value ? value : '',
             },
         },
         { skip: value === '' ? true : false }

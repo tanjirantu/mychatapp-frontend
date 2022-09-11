@@ -38,8 +38,6 @@ export default async (request: Request, h: ResponseToolkit) => {
 
 		const count = await MessageModel.countDocuments(findQuery);
 
-		// const reversedMessagesArray = messages.reverse();
-
 		return h
 			.response(
 				sendResponse(

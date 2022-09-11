@@ -32,6 +32,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 			{
 				$match: findQuery,
 			},
+			{ $sort: { _id: -1 } },
 			{
 				$project: {
 					_id: 1,
@@ -45,7 +46,6 @@ export default async (request: Request, h: ResponseToolkit) => {
 					},
 				},
 			},
-			{ $sort: { _id: -1 } },
 			{ $skip: skip },
 			{ $limit: limit },
 		]);

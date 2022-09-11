@@ -1,5 +1,5 @@
 export type UserFilterInput = {
-    phone: string;
+    search: string;
     skip?: number;
     limit?: number;
 };
