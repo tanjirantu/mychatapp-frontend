@@ -51,7 +51,7 @@ const createMessage = async (payload: MessageCreateInput) => {
 };
 
 const updateLastSeen = async (lastSeen: LastSeenCreateInput) => {
-	return await LastSeenModel.find(
+	return await LastSeenModel.findOneAndUpdate(
 		{
 			userUid: lastSeen.userUid,
 		},
