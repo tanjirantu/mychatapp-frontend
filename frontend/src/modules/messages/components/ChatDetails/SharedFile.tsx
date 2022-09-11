@@ -32,7 +32,7 @@ const SharedFile = () => {
                     data: state?.result?.messages,
                     count: state?.result?.count,
                     params: {
-                        uid: receiverUid || '',
+                        uid: activeMessagehead?.uid || '',
                         includeOnly: fileTypes,
                     },
                 })
@@ -57,7 +57,7 @@ const SharedFile = () => {
 
     const handleInfiniteScroll = async (skip: number) => {
         const response = await lazyFetch({
-            receiverUid: activeMessagehead?.users[0]?.uid || '',
+            receiverUid: activeMessagehead?.uid || '',
             includeOnly: fileTypes,
             limit: 10,
             skip,

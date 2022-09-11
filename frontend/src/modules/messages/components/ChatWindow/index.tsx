@@ -102,7 +102,7 @@ const ChatWindow = () => {
     const handleInfiniteScroll = async (skip: number) => {
         const response = await lazyFetch({
             ...filter,
-            receiverUid: activeMessagehead?.users[0]?.uid || '',
+            receiverUid: activeMessagehead?.uid || '',
             limit: 10,
             skip,
         });

@@ -1,14 +1,62 @@
-import React from 'react';
+import http from '../../../../config/http';
+import React, { useMemo } from 'react';
+import FileUploadInput from '../../../common/components/FileUploadInput';
 import UserAvatar from '../../../common/components/UserAvatar';
 import { useAppSelector } from '../../../common/hooks';
+import useFileUpload from '../../../common/hooks/useFileUpload';
 import styles from './MessageLists.module.scss';
 const Profile = () => {
     const { data } = useAppSelector((state) => state.user);
 
+    const previousUploadedFiles = useMemo(() => {
+        return data?.logo?.name ? [{ url: data.logo.url, name: '' }] : [];
+    }, [data?.uid]);
+    const { files, onChange, onUpload } = useFileUpload({
+        previousUploadedFiles: previousUploadedFiles,
+        multiple: false,
+    });
+
+    const handleFileInputChange = async (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        onChange(event);
+
+        setTimeout(async () => {
+            const fileUpoadResponse = await onUpload();
+
+            http.put('/user/me', {
+                logo: fileUpoadResponse[0],
+            });
+        }, 2000);
+    };
+
     return (
-        <div className={`h-20 items-center  px-5 flex ${styles.profile}`}>
-            <UserAvatar width={50} height={50} name="Tusher" src={''} />
-            <h4>{data?.meta?.companyName || ''}</h4>
+        <div
+            className={`h-20 items-center mb-3 mt-3  px-5 flex ${styles.profile}`}
+        >
+            <FileUploadInput onChange={handleFileInputChange} multiple={false}>
+                <div className="relative w-full h-full overflow-hidden rounded-full">
+                    <UserAvatar
+                        className="border"
+                        width={65}
+                        height={65}
+                        name="Tusher"
+                        src={files[0]?.url || ''}
+                    />
+                    <div className="absolute h-6 flex justify-center text-white text-sm font-normal  bg-opacity-30 bg-black w-full left-0  right-0 bottom-0">
+                        Edit
+                    </div>
+                </div>
+            </FileUploadInput>
+
+            <div>
+                <h4 className="mb-2 text-dh-gray-800">
+                    {data?.firstName + ' ' + data?.lastName || ''}
+                </h4>
+                <p className="text-dh-gray-700">
+                    {data?.contact.phoneWithDialCode}
+                </p>
+            </div>
         </div>
     );
 };

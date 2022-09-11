@@ -37,7 +37,7 @@ const SharedMedia = () => {
         },
 
         params: {
-            receiverUid: receiverUid || '',
+            receiverUid: activeMessagehead?.uid || '',
             includeOnly: imageTypes,
             limit: 10,
             skip: 0,
@@ -54,7 +54,7 @@ const SharedMedia = () => {
 
     const handleInfiniteScroll = async (skip: number) => {
         const response = await lazyFetch({
-            receiverUid: activeMessagehead?.users[0]?.uid || '',
+            receiverUid: activeMessagehead?.uid || '',
             includeOnly: imageTypes,
             limit: 10,
             skip,
