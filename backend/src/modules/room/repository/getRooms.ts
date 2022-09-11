@@ -91,11 +91,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 
 		return h
 			.response(
-				sendResponse(
-					{ rooms: messageRooms.map(mapOdmEntityToType), count },
-					200,
-					"SUCCESS"
-				)
+				sendResponse({ rooms: rooms, count: count }, 200, "SUCCESS")
 			)
 			.code(200);
 	} catch (exp: any) {

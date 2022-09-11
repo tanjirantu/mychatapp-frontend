@@ -45,8 +45,6 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
 
     const messagesList = results?.data || [];
 
-    console.log(messagesList);
-
     return (
         <div ref={ref} className={`${styles.chat_box} overflow-y-auto`}>
             <div className="max-w-lg text-center mx-auto flex flex-col items-center mt-7">
@@ -57,11 +55,15 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                     src={'/static/assets/images/avatar.png'}
                 />
                 <h2 className="text-xl text-dh-gray-800 mt-2.5">
-                    {activeMessagehead?.users[0].contact.phoneWithDialCode}
+                    {activeMessagehead?.users[0].firstName +
+                        ' ' +
+                        activeMessagehead?.users[0].lastName}
                 </h2>
                 <h5 className="font-normal text-dh-gray-700 mt-1.5">
                     This is very beginning of your conversations with{' '}
-                    {activeMessagehead?.users[0].contact.phoneWithDialCode}
+                    {activeMessagehead?.users[0].firstName +
+                        ' ' +
+                        activeMessagehead?.users[0].lastName}
                 </h5>
             </div>
             <InfiniteScroll

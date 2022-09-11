@@ -158,8 +158,6 @@ const messageSlice = createSlice({
                 };
             }
 
-            console.log('url', urlParms);
-
             const findIndex = state.messageHeads.results.findIndex((head) => {
                 return action.payload.params.uid === head.users[0].uid;
             });

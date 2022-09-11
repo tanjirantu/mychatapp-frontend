@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './ChatDetails.module.scss';
-import SharedFile from './SharedFile';
-import SharedMedia from './SharedMedia';
+// import SharedFile from './SharedFile';
+// import SharedMedia from './SharedMedia';
 import dynamic from 'next/dynamic';
 
 const NoSSRProfileInfo = dynamic(() => import('./ProfileIntro'), {

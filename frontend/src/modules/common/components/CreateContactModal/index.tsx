@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
-import PhoneInput, { CountryData } from 'react-phone-input-2';
-import Dialog from '../../../common/components/Dialog';
+import Dialog from '../Dialog';
 
 import 'react-phone-input-2/lib/style.css';
-import useDebounce from '../../../common/hooks/useDebounce';
+import useDebounce from '../../hooks/useDebounce';
 import { useGetUsersQuery } from '../../../../api/users';
-import UserAvatar from '../../../common/components/UserAvatar';
+import UserAvatar from '../UserAvatar';
 import { createRoomMutation } from '../../../../api/messages';
 import {
     setActiveHeads,
     setMessageHeads,
 } from '../../../../reducers/messageReducer';
-import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-
-type PhoneInput = {
-    phone: string;
-    countryData: CountryData;
-};
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import TextInput from '../TextInput';
 
 interface ICreateContactModal {
     onClose: () => void;
@@ -27,21 +22,12 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
     isOpen,
     onClose,
 }) => {
-    const [contact, setContact] = useState<PhoneInput>({
-        phone: '',
-        countryData: {
-            dialCode: '',
-            countryCode: '',
-            format: '',
-            name: '',
-        },
-    });
+    const [search, setSearch] = useState('');
+
     const dispatch = useAppDispatch();
     const { data: userData } = useAppSelector((state) => state.user);
     const { messageHeads } = useAppSelector((state) => state.messages);
-    const value = useDebounce(contact.phone, 700);
-
-    const number = value.replace(contact.countryData.dialCode, '');
+    const value = useDebounce(search, 700);
 
     const { isFetching, data } = useGetUsersQuery(
         {
@@ -49,7 +35,7 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
                 phone: value ? value : '',
             },
         },
-        { skip: number === '' ? true : false }
+        { skip: value === '' ? true : false }
     );
 
     const handleCreateRoom = async (uid: string) => {
@@ -61,19 +47,18 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
             });
 
             if (response.statusCode === 200) {
-                if (messageHeads.results.length) {
-                    const _messageHeads = messageHeads.results.filter(
-                        (data) => data.uid !== response.result.uid
-                    );
-                    dispatch(
-                        setMessageHeads({
-                            results: [response.result, ..._messageHeads],
-                            count: messageHeads.count,
-                        })
-                    );
+                const _messageHeads = messageHeads.results.filter(
+                    (data) => data.uid !== response.result.uid
+                );
 
-                    dispatch(setActiveHeads(response.result));
-                }
+                dispatch(
+                    setMessageHeads({
+                        results: [response.result, ..._messageHeads],
+                        count: messageHeads.count,
+                    })
+                );
+
+                dispatch(setActiveHeads(response.result));
 
                 onClose();
             }
@@ -99,33 +84,20 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
 
                 <div>
                     <div className=" mb-2 mt-6">
-                        <PhoneInput
-                            inputStyle={{
-                                border: 'none',
-                                backgroundColor: '#F7F7F7',
-
-                                padding: '25px 0px 25px 60px',
-                                width: '100%',
-                                boxShadow: '0 1px 0 0 #e8e8e8',
-                            }}
-                            buttonStyle={{
-                                border: 'none',
-                                width: '60px',
-                            }}
-                            country={'bd'}
-                            value={contact.phone}
-                            onChange={(phone, countryData: CountryData) =>
-                                setContact({ phone, countryData })
-                            }
+                        <TextInput
+                            className="mt-8"
+                            label="Search"
+                            value={search}
+                            onChange={(event) => setSearch(event.target.value)}
                         />
                     </div>
                 </div>
 
                 {data?.result.users.length && isFetching !== true ? (
-                    <h5 className="mb-2">Select Contact </h5>
+                    <h5 className="mb-2 mt-4">Select Contact </h5>
                 ) : null}
 
-                <div>
+                <div className="flex gap-2 flex-col">
                     {data?.result.users.map((user) => {
                         return (
                             <div
@@ -134,12 +106,20 @@ const CreateContactModal: React.FC<ICreateContactModal> = ({
                                 className="bg-gray-100 flex gap-3 hover:bg-opacity-100 items-center cursor-pointer select-none px-3 py-2 bg-opacity-60 rounded-md "
                             >
                                 <UserAvatar
-                                    height={35}
-                                    width={35}
+                                    className="border"
+                                    height={40}
+                                    width={40}
                                     src="/static/assets/images/avatar.png"
                                     name=""
                                 />
-                                <h4>{user.contact.phoneWithDialCode}</h4>
+                                <div>
+                                    <p className="text-base ">
+                                        {user.firstName + ' ' + user.lastName}
+                                    </p>
+                                    <p className="text-sm text-dh-gray-700">
+                                        {user.contact.phoneWithDialCode}
+                                    </p>
+                                </div>
                             </div>
                         );
                     })}

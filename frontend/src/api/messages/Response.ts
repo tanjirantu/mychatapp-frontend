@@ -5,6 +5,8 @@ export type Friend = {
         dialCode: string;
         phoneWithDialCode: string;
     };
+    firstName: string;
+    lastName: string;
 };
 
 export type MeesageHead = {
