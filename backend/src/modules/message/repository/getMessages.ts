@@ -12,7 +12,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 		let limit = 10;
 
 		if (request.query.skip) skip = request.query.skip;
-		if (request.query.limit) skip = request.query.limit;
+		if (request.query.limit) limit = request.query.limit;
 
 		const findQuery = flattenObject({ roomUid: roomUid });
 
