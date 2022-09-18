@@ -20,13 +20,16 @@ interface IFileWithType {
 
 interface IUseFileUploadReturn {
     files: IFileWithType[];
-    onUpload: () => Promise<{ name: string; url: string }[]>;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onUpload: (files?: IFile[]) => Promise<{ name: string; url: string }[]>;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => IFile[];
     clear: () => void;
     onRemove: (index: number) => void;
 }
 
-const useFileUpload = ({ previousUploadedFiles, multiple = true }: IUseFileUpload): IUseFileUploadReturn => {
+const useFileUpload = ({
+    previousUploadedFiles,
+    multiple = true,
+}: IUseFileUpload): IUseFileUploadReturn => {
     const [files, setFiles] = useState<IFile[]>([]);
 
     useEffect(() => {
@@ -39,28 +42,43 @@ const useFileUpload = ({ previousUploadedFiles, multiple = true }: IUseFileUploa
         setFiles([]);
     };
 
-    const onUpload = async (): Promise<{ name: string; url: string }[]> => {
-        const _files = files.filter((file) => file.lastModified);
+    const onUpload = async (
+        uploadFile?: IFile[]
+    ): Promise<{ name: string; url: string }[]> => {
+        const _files = uploadFile
+            ? uploadFile
+            : files.filter((file) => file.lastModified);
+
         const response = await Promise.all(
             _files.map(async (file) => {
                 return await uploadAsset(file as File);
             })
         );
+
         const filterResponse = response
             .filter((file) => file.isError === false)
             .map(({ filename, url }) => ({ name: filename, url: url || '' }));
         const previousFiles = files
             .filter((file) => !file.lastModified)
             .map(({ name, url }) => ({ name: name || '', url: url || '' }));
+
+        if (uploadFile) {
+            return filterResponse;
+        }
+
         return [...previousFiles, ...filterResponse];
     };
 
-    const onChange = ({ currentTarget: input }: React.ChangeEvent<HTMLInputElement>) => {
-        if (input.files === null) return;
+    const onChange = ({
+        currentTarget: input,
+    }: React.ChangeEvent<HTMLInputElement>) => {
+        if (input.files === null) return [];
         if (multiple) {
             setFiles([...files, ...input.files]);
+            return [...files, ...input.files];
         } else {
             setFiles([...input.files]);
+            return [...input.files];
         }
     };
 

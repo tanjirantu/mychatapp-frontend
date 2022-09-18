@@ -13,7 +13,7 @@ import RenderUploadedFileThumbs from '../../../common/components/FileUploadInput
 import Dropdown from '../../../common/components/Dropdown';
 import { getFileType } from '../../../../helpers/utils';
 import useDebounce from '../../../common/hooks/useDebounce';
-import createDOMPurify from 'dompurify';
+// import createDOMPurify from 'dompurify';
 import { MessageType } from '../../../common/hooks/useMessage';
 
 const NoSSRPicker = dynamic(
@@ -151,20 +151,20 @@ const ChatInputs: React.FC<ChatInputProps> = ({
         }
     }, [activeMessagehead?.uid]);
 
-    function textFromDiv(selector: string) {
-        return selector
-            .replace(/<div>/g, ' \n ')
-            .replace(/<\/div>/g, '')
-            .replace(/<br>/g, ' \n ');
-    }
+    // function textFromDiv(selector: string) {
+    //     return selector
+    //         .replace(/<div>/g, ' \n ')
+    //         .replace(/<\/div>/g, '')
+    //         .replace(/<br>/g, ' \n ');
+    // }
 
-    const handleInputChange = (event: React.FormEvent<HTMLDivElement>) => {
-        const text = textFromDiv(event.currentTarget.innerHTML);
-        const cleanText = createDOMPurify.sanitize(text, {
-            ALLOWED_ATTR: ['style'],
-        });
-        setMessage(cleanText);
-    };
+    // const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
+    //     const text = textFromDiv(event.currentTarget.innerHTML);
+    //     const cleanText = createDOMPurify.sanitize(text, {
+    //         ALLOWED_ATTR: ['style'],
+    //     });
+    //     setMessage(cleanText);
+    // };
     return (
         <div
             className={`${styles.chat_inputs} py-3 flex-shrink-0 relative border-t border-dh-gray-200`}
@@ -223,7 +223,8 @@ const ChatInputs: React.FC<ChatInputProps> = ({
                                         data={data}
                                         onEmojiSelect={(emoji: any) => {
                                             setMessage(
-                                                message?.concat(emoji?.native)
+                                                (message) =>
+                                                    message + ' ' + emoji.native
                                             );
                                         }}
                                         previewPosition="none"
@@ -234,17 +235,16 @@ const ChatInputs: React.FC<ChatInputProps> = ({
                         </Dropdown.Item>
                     </Dropdown>
                 </div>
-                <div
-                    onInput={handleInputChange}
-                    ref={inputRef}
+                <textarea
+                    onChange={(evet) => setMessage(evet.target.value)}
                     contentEditable
                     aria-multiline
-                    aria-label="Write a message…"
+                    placeholder="Write a message…"
                     data-placeholder={!message ? 'Write a message…' : ''}
                     role="textbox"
-                    className={`${styles.input_wraper} relative text-sm overflow-hidden border-none outline-none px-2.5 pt-2.5  flex-grow-0 w-full`}
-                ></div>
-
+                    value={message}
+                    className={`${styles.input_wraper} relative text-sm overflow-hidden border-none outline-none px-2.5 pt-3  flex-grow-0 w-full`}
+                ></textarea>
                 <img
                     onClick={sendMessageHandler}
                     className={`h-8 w-8 mb-1 cursor-pointer select-none`}

@@ -54,21 +54,6 @@ const ChatHeader: React.FC<IChatHeader> = ({ onSearch }) => {
                         onClick={() => setIsOpenSearch(!isOpenSearch)}
                     />
                 )}
-                <img
-                    className="w-9 h-9 cursor-pointer"
-                    src="/static/assets/icons/message-pin.png"
-                    alt=""
-                />
-                <img
-                    className="w-9 h-9 cursor-pointer"
-                    src="/static/assets/icons/message-calender.png"
-                    alt=""
-                />
-                <img
-                    className="w-9 h-9 cursor-pointer"
-                    src="/static/assets/icons/message-option.png"
-                    alt=""
-                />
             </div>
         </div>
     );
