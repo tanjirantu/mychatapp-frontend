@@ -19,15 +19,12 @@ const Profile = () => {
     const handleFileInputChange = async (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        onChange(event);
+        const files = onChange(event);
 
-        setTimeout(async () => {
-            const fileUpoadResponse = await onUpload();
-
-            http.put('/user/me', {
-                logo: fileUpoadResponse[0],
-            });
-        }, 2000);
+        const fileUpoadResponse = await onUpload(files);
+        http.put('/user/me', {
+            logo: fileUpoadResponse[0],
+        });
     };
 
     return (
