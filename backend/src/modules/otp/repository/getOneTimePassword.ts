@@ -39,8 +39,8 @@ export default async (request: Request, h: ResponseToolkit) => {
 
 		// const response = await twilioClient.messages.create({
 		// 	body: `Your account verification code is: ${otp}`,
-		// 	from: process.env.TWILIO_PHONE_NUMBER || "+13344639271" ,
-		// 	to: `${phoneWithDialCode}`,
+		// 	from: process.env.TWILIO_PHONE_NUMBER || "+13344639271",
+		// 	to: `+${phoneWithDialCode}`,
 		// });
 
 		// if (!response) {
@@ -48,6 +48,8 @@ export default async (request: Request, h: ResponseToolkit) => {
 		// 		.response(sendErrorResponse("COULD_NOT_SEND_SMS"))
 		// 		.code(200);
 		// }
+
+		console.log("Otp sent to phone.", otp);
 
 		return h
 			.response(sendResponse({ deviceUuid }, 200, "SUCCESS"))
