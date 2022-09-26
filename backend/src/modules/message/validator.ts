@@ -6,7 +6,7 @@ const getMessages = {
 	},
 	query: {
 		includeOnly: Joi.string(),
-		text: Joi.string(),
+		searchText: Joi.string(),
 		skip: Joi.string(),
 		limit: Joi.string(),
 	},
