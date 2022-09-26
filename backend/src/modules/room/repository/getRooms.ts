@@ -4,6 +4,7 @@ import mapOdmEntityToType from "../mapper/mapOdmEntityToType";
 import RoomModel from "../model";
 import { pubClient } from "../../../server/httpServer";
 import MessageModel from "../../message/model";
+import UserModel from "../../user/model";
 
 const getNewMessagesCount = async (roomUid: string, userUid: string) => {
 	const myLastSeenAt = (await pubClient.hGet(
@@ -27,7 +28,29 @@ export default async (request: Request, h: ResponseToolkit) => {
 		const limit = request.query.limit ? request.query.limit : 10;
 
 		const authUser: any = request.auth.credentials;
-		const findQuery = { "users.uid": authUser.userUid };
+		let findQuery: any = { "users.uid": authUser.userUid };
+
+		let userUids: any = [];
+		if (request.query.search) {
+			findQuery = {};
+			const users = await UserModel.aggregate([
+				{
+					$project: {
+						uid: 1,
+						fullName: { $concat: ["$firstName", " ", "$lastName"] },
+					},
+				},
+				{ $match: { fullName: new RegExp(request.query.search) } },
+			]);
+			for await (const user of users) {
+				userUids.push(user.uid);
+			}
+
+			findQuery = {
+				"users.uid": { $in: userUids },
+			};
+		}
+
 		const rooms = await RoomModel.aggregate([
 			{
 				$match: findQuery,
@@ -46,8 +69,8 @@ export default async (request: Request, h: ResponseToolkit) => {
 				},
 			},
 			{ $sort: { _id: -1 } },
-			{ $skip: skip },
-			{ $limit: limit },
+			{ $skip: parseInt(skip) },
+			{ $limit: parseInt(limit) },
 		]);
 
 		const messageRooms: any = [];
@@ -91,11 +114,7 @@ export default async (request: Request, h: ResponseToolkit) => {
 
 		return h
 			.response(
-				sendResponse(
-					{ rooms: messageRooms, count: count },
-					200,
-					"SUCCESS"
-				)
+				sendResponse({ rooms: messageRooms, count: 0 }, 200, "SUCCESS")
 			)
 			.code(200);
 	} catch (exp: any) {
