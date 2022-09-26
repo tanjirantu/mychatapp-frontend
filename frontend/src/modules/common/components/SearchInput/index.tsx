@@ -53,7 +53,7 @@ const SearchInput = () => {
         setRecentSearch(_recentSearch);
     };
 
-    const users = !!debouncedValue && !isFetching ? data?.result || [] : [];
+    const users = !!debouncedValue && !isFetching ? data?.result || [] : [] as any;
 
     return (
         <div
