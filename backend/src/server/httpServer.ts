@@ -114,6 +114,14 @@ const StartServer = async () => {
 			validate: validateJwt,
 		});
 
+		await server.route({
+			method: "GET",
+			path: "/health",
+			handler: function (request, h) {
+				return h.response({ message: "OK" }).code(200);
+			},
+		});
+
 		server.route(routes);
 
 		// server.ext("onRequest", async (request, h) => {
