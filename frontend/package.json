@@ -7,7 +7,7 @@
         "build": "postcss styles/tailwind.css -o styles/build.css && next build",
         "build:tailwind": "concurrently \"next dev\" \"npm run watch:tailwind\"",
         "watch:tailwind": "TAILWIND_MODE=watch postcss styles/tailwind.css -o styles/build.css --watch",
-        "start": "next start",
+        "start": "next start -p 7001",
         "lint": "eslint --fix --ext .ts,.tsx .",
         "format": "prettier --ignore-path .gitignore --write .",
         "type-check": "tsc"
