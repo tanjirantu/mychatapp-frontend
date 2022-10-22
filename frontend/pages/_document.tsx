@@ -1,9 +1,4 @@
-import Document, {
-    DocumentContext,
-    Html,
-    Main,
-    NextScript,
-} from 'next/document';
+import Document, { DocumentContext, Html, Head, Main, NextScript } from 'next/document';
 // import Script from 'next/script';
 
 class MyDocument extends Document {
@@ -16,6 +11,11 @@ class MyDocument extends Document {
     render() {
         return (
             <Html lang="en">
+                <Head>
+                    <link rel="icon" type="image/png" href="/static/assets/icons/icon-72x72.png" />
+                    <link rel="apple-touch-icon" sizes="72x72" href="/static/icons/icon-72x72.png" />
+                    <link rel="shortcut icon" href="/static/assets/icons/icon-192x192.png" />
+                </Head>
                 <body>
                     <Main />
                     <NextScript />
