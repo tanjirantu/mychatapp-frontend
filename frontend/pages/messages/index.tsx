@@ -1,4 +1,5 @@
 import { AppProps } from 'next/app';
+import Head from 'next/head';
 import { ReactNode } from 'react';
 import AuthLayout from '../../src/layouts/AuthLayout';
 import MessageLayout from '../../src/layouts/MessageLayout';
@@ -14,9 +15,14 @@ Messages.getLayout = (
     pageProps: AppProps & { user: DecodedUser }
 ) => {
     return (
-        <AuthLayout user={pageProps.user}>
-            <MessageLayout>{page}</MessageLayout>
-        </AuthLayout>
+        <>
+            <Head>
+                <title>Messages</title>
+            </Head>
+            <AuthLayout user={pageProps.user}>
+                <MessageLayout>{page}</MessageLayout>
+            </AuthLayout>
+        </>
     );
 };
 
