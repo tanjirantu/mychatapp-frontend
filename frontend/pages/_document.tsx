@@ -1,4 +1,10 @@
-import Document, { DocumentContext, Html, Head, Main, NextScript } from 'next/document';
+import Document, {
+    DocumentContext,
+    Html,
+    Head,
+    Main,
+    NextScript,
+} from 'next/document';
 // import Script from 'next/script';
 
 class MyDocument extends Document {
