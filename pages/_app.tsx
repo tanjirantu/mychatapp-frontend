@@ -48,11 +48,13 @@ export const withSession = (
     getSerSideProps: (
         ctx: GetServerSidePropsContext,
         user: DecodedUser | null
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ) => any
 ): GetServerSideProps => {
     return (ctx: GetServerSidePropsContext) => {
         const { req } = ctx;
         const token = req.cookies.token || '';
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let user: any;
         if (token) {
             const decodeuser = jwt_decode(token);
