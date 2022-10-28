@@ -1,1 +1,0 @@
-https://github.com/Jayvirrathi/microservices/blob/master/package.json
