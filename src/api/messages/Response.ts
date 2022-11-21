@@ -7,6 +7,10 @@ export type Friend = {
     };
     firstName: string;
     lastName: string;
+    logo?: {
+        url: string;
+        name: string;
+    }
 };
 
 export type MeesageHead = {
