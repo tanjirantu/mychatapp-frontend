@@ -76,21 +76,17 @@ const ChatInputs: React.FC<ChatInputProps> = ({
 
         if (!activeMessagehead?.uid) return;
 
-        const filesWithFileType: any = [];
+        const uploadedFiles = files.length ? await onUpload() : [];
 
-        const uploadedFiles = await onUpload();
-
-        if (uploadedFiles?.length) {
-            uploadedFiles?.map((file, idx) => {
-                const fileType = getFileType(file?.url);
-                filesWithFileType.push({
-                    ...file,
-                    fileType: fileType,
-                    originalFilename: files[idx]?.name,
-                });
-            });
-        }
-        if (message || filesWithFileType?.length) {
+        const filesWithFileType: any = uploadedFiles?.map((file, idx) => {
+            const fileType = getFileType(file?.url);
+            return {
+                ...file,
+                fileType: fileType,
+                originalFilename: files[idx]?.name,
+            };
+        });
+        if (message.length || files.length) {
             flushSync(() => {
                 onChatSubmit({
                     roomUid: activeMessagehead.uid || '',
@@ -151,20 +147,6 @@ const ChatInputs: React.FC<ChatInputProps> = ({
         }
     }, [activeMessagehead?.uid]);
 
-    // function textFromDiv(selector: string) {
-    //     return selector
-    //         .replace(/<div>/g, ' \n ')
-    //         .replace(/<\/div>/g, '')
-    //         .replace(/<br>/g, ' \n ');
-    // }
-
-    // const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
-    //     const text = textFromDiv(event.currentTarget.innerHTML);
-    //     const cleanText = createDOMPurify.sanitize(text, {
-    //         ALLOWED_ATTR: ['style'],
-    //     });
-    //     setMessage(cleanText);
-    // };
     return (
         <div
             className={`${styles.chat_inputs} py-3 flex-shrink-0 relative border-t border-dh-gray-200`}
