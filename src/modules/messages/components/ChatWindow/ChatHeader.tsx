@@ -17,19 +17,15 @@ const ChatHeader: React.FC<IChatHeader> = ({ onSearch }) => {
         >
             <div className="self-center">
                 <h5 className="text-dh-gray-800 ">
-                    {activeMessagehead?.users[0] === undefined
-                        ? ''
-                        : activeMessagehead?.users[0]?.firstName +
-                          ' ' +
-                          activeMessagehead?.users[0]?.lastName}
+                    {!!activeMessagehead?.users.length &&
+                    activeMessagehead?.users.length < 2
+                        ? activeMessagehead?.users[0] === undefined
+                            ? ''
+                            : activeMessagehead?.users[0]?.firstName +
+                              ' ' +
+                              activeMessagehead?.users[0]?.lastName
+                        : activeMessagehead?.label}
                 </h5>
-                {/* <span className="text-dh-gray-700">
-                    {activeMessagehead?.seenAt
-                        ? '  Last seen' +
-                          ' ' +
-                          formatMessageFromNow(activeMessagehead?.seenAt)
-                        : null}
-                </span> */}
             </div>
             <div className="flex gap-3 ">
                 {isOpenSearch ? (

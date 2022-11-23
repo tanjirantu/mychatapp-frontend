@@ -12,7 +12,7 @@ const SharedMedia = () => {
     const { activeMessagehead, images } = useAppSelector(
         (state) => state.messages
     );
-    const receiverUid = activeMessagehead?.users[0]?.uid || '';
+    const receiverUid = activeMessagehead?.uid;
     const dispatch = useAppDispatch();
 
     const { isLoading, lazyFetch } = useQuery(getAllMessagesByRoomUidQuery, {
@@ -37,7 +37,7 @@ const SharedMedia = () => {
         },
 
         params: {
-            receiverUid: activeMessagehead?.uid || '',
+            receiverUid: activeMessagehead?.uid || "",
             includeOnly: imageTypes,
             limit: 10,
             skip: 0,
@@ -47,14 +47,14 @@ const SharedMedia = () => {
     const results =
         images.results[
             getUrlParams({
-                uid: activeMessagehead?.users[0]?.uid || '',
+                uid: activeMessagehead?.uid || "",
                 includeOnly: imageTypes,
             })
         ];
 
     const handleInfiniteScroll = async (skip: number) => {
         const response = await lazyFetch({
-            receiverUid: activeMessagehead?.uid || '',
+            receiverUid: activeMessagehead?.uid || "",
             includeOnly: imageTypes,
             limit: 10,
             skip,

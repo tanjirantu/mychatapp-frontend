@@ -15,7 +15,7 @@ const SharedFile = () => {
     const { activeMessagehead, attachments } = useAppSelector(
         (state) => state.messages
     );
-    const receiverUid = activeMessagehead?.users[0].uid;
+    const receiverUid = activeMessagehead?.uid;
     const dispatch = useAppDispatch();
 
     const { isLoading, lazyFetch } = useQuery(getAllMessagesByRoomUidQuery, {
@@ -50,7 +50,7 @@ const SharedFile = () => {
     const results =
         attachments.results[
             getUrlParams({
-                uid: activeMessagehead?.users[0].uid,
+                uid: activeMessagehead?.uid || "",
                 includeOnly: fileTypes,
             })
         ];
