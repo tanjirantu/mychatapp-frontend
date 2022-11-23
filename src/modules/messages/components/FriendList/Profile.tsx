@@ -4,7 +4,7 @@ import FileUploadInput from '../../../common/components/FileUploadInput';
 import UserAvatar from '../../../common/components/UserAvatar';
 import { useAppSelector } from '../../../common/hooks';
 import useFileUpload from '../../../common/hooks/useFileUpload';
-import styles from './MessageLists.module.scss';
+import styles from './FriendList.module.scss';
 
 const Profile = () => {
     const { data } = useAppSelector((state) => state.user);

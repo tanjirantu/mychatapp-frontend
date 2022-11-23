@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Filter from './Filter';
 import List from './List';
-import styles from './MessageLists.module.scss';
+import styles from './FriendList.module.scss';
 import Profile from './Profile';
 import { MeesageHead } from '../../../../api/messages/Response';
 import { getAllMessageRoomQuery } from '../../../../api/messages';
@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import useDebounce from '../../../common/hooks/useDebounce';
 import InfiniteScroll from '../../../common/components/InfiniteScroll';
 
-const MessageLists: React.FC<{ messageLists: MeesageHead[] }> = ({
+const FriendList: React.FC<{ messageLists: MeesageHead[] }> = ({
     messageLists,
 }) => {
     const { messageHeads } = useAppSelector((state) => state.messages);
@@ -102,4 +102,4 @@ const MessageLists: React.FC<{ messageLists: MeesageHead[] }> = ({
     );
 };
 
-export default MessageLists;
+export default FriendList;

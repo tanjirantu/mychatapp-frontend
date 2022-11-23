@@ -4,7 +4,7 @@ import { MeesageHead } from '../../../../api/messages/Response';
 import { setActiveHeads } from '../../../../reducers/messageReducer';
 import UserAvatar from '../../../common/components/UserAvatar';
 import { useAppDispatch, useAppSelector } from '../../../common/hooks';
-import styles from './MessageLists.module.scss';
+import styles from './FriendList.module.scss';
 const List: React.FC<MeesageHead> = (props) => {
     const dispatch = useAppDispatch();
     const router = useRouter();

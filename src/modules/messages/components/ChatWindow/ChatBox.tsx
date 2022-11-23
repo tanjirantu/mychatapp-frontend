@@ -43,7 +43,6 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
             }
         }
     }, [results, ref]);
-    console.log(data)
     const messagesList = results?.data || [];
 
     if (isLoading === true && messagesList.length === 0) {

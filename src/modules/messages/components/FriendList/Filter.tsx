@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './MessageLists.module.scss';
+import styles from './FriendList.module.scss';
 
 interface IFilter {
     onSearch: (value: string) => void;

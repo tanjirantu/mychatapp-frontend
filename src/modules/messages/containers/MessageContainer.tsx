@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ChatWindow from '../components/ChatWindow';
-import MessageLists from '../components/MessageLists';
+import FriendList from '../components/FriendList';
 import { useAppSelector } from '../../common/hooks';
 import OverflowOption from '../components/OverflowOption';
 
@@ -19,7 +19,7 @@ const MessageContainer = () => {
         <div className='h-screen overflow-y-auto relative'>
             <OverflowOption/>
             <div className="flex">
-                <MessageLists messageLists={messageHeads.results || []} />
+                <FriendList messageLists={messageHeads.results || []} />
                 <div className="flex-auto  h-screen flex flex-col ">
                     <ChatWindow />
                 </div>
