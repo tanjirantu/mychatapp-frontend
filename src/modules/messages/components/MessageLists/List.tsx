@@ -40,7 +40,7 @@ const List: React.FC<MeesageHead> = (props) => {
                     <p className="text-sm">
                         {props.users.length > 1
                             ? props.label
-                            : props?.users[0]?.firstName +
+                            : props?.users[0]?.firstName + ' ' +
                                   props.users[0].lastName || ''}
                     </p>
                 </div>
