@@ -69,7 +69,7 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                     width={90}
                     height={90}
                     name={''}
-                    src={'/static/assets/images/avatar.png'}
+                    src={activeMessagehead?.users[0].logo?.url ? activeMessagehead?.users[0].logo?.url : '/static/assets/images/avatar.png'}
                 />
                 <h2 className="text-xl text-dh-gray-800 mt-2.5">
                     {activeMessagehead?.users[0].firstName +
