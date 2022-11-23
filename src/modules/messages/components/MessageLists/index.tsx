@@ -91,8 +91,8 @@ const MessageLists: React.FC<{ messageLists: MeesageHead[] }> = ({
                 >
                     <>
                         {messageLists.length
-                            ? messageLists.map((list) => {
-                                  return <List key={list.uid} {...list} />;
+                            ? messageLists.map((_list) => {
+                                  return <List key={_list.uid} {..._list} />;
                               })
                             : null}
                     </>

@@ -14,6 +14,7 @@ export type Friend = {
 };
 
 export type MeesageHead = {
+    label : string
     uid: string;
     users: Friend[];
 };

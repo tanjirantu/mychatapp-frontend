@@ -29,13 +29,19 @@ const List: React.FC<MeesageHead> = (props) => {
                 width={45}
                 height={45}
                 name={''}
-                src={props?.users[0]?.logo?.url ? props?.users[0]?.logo?.url : '/static/assets/images/avatar.png'}
+                src={
+                    props?.users[0]?.logo?.url
+                        ? props?.users[0]?.logo?.url
+                        : '/static/assets/images/avatar.png'
+                }
             />
             <div className="w-full">
                 <div className="flex justify-between items-start">
                     <p className="text-sm">
-                        {props?.users[0]?.firstName + props.users[0].lastName ||
-                            ''}
+                        {props.users.length > 1
+                            ? props.label
+                            : props?.users[0]?.firstName +
+                                  props.users[0].lastName || ''}
                     </p>
                 </div>
             </div>

@@ -219,8 +219,6 @@ const ChatInputs: React.FC<ChatInputProps> = ({
                 </div>
                 <textarea
                     onChange={(evet) => setMessage(evet.target.value)}
-                    contentEditable
-                    aria-multiline
                     placeholder="Write a message…"
                     data-placeholder={!message ? 'Write a message…' : ''}
                     role="textbox"
