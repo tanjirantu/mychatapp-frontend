@@ -5,6 +5,8 @@ import UserAvatar from '../../../common/components/UserAvatar';
 import { useAppSelector } from '../../../common/hooks';
 import useFileUpload from '../../../common/hooks/useFileUpload';
 import styles from './MessageLists.module.scss';
+import { BarLoader } from 'react-spinners';
+
 const Profile = () => {
     const { data } = useAppSelector((state) => state.user);
 
@@ -45,14 +47,21 @@ const Profile = () => {
                     </div>
                 </div>
             </FileUploadInput>
-
             <div>
-                <h4 className="mb-2 text-dh-gray-800">
-                    {data?.firstName + ' ' + data?.lastName || ''}
-                </h4>
-                <p className="text-dh-gray-700">
-                    {data?.contact.phoneWithDialCode}
-                </p>
+                {data !== null ? (
+                    <div>
+                        <h4 className="mb-2 text-dh-gray-800">
+                            {data?.firstName
+                                ? data.firstName
+                                : '' + ' ' + data?.lastName
+                                ? data?.lastName
+                                : ''}
+                        </h4>
+                        <p className="text-dh-gray-700">
+                            {data?.contact.phoneWithDialCode}
+                        </p>
+                    </div>
+                ) : null}
             </div>
         </div>
     );
