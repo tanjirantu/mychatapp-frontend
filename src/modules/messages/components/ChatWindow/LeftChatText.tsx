@@ -54,6 +54,10 @@ const LeftChatText: React.FC<ILeftChatText> = ({
                     }))}
                 />
             ) : null}
+
+            <div className='flex flex-col'>
+                {/* <p className='py-2'>{name}</p> */}
+            <div className='flex gap-2'>
             <UserAvatar width={35} height={35} name={name} src={url} />
             <div className="relative">
                 <div className="flex flex-col gap-2.5">
@@ -115,6 +119,8 @@ const LeftChatText: React.FC<ILeftChatText> = ({
                 <h5 className="text-dh-gray-500 text-opacity-90 text-xs absolute font-normal mt-1.5 whitespace-nowrap left-0">
                     {formatMessageTime(date)}
                 </h5>
+            </div>
+            </div>
             </div>
         </div>
     );

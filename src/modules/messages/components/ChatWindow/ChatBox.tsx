@@ -43,7 +43,7 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
             }
         }
     }, [results, ref]);
-
+    console.log(data)
     const messagesList = results?.data || [];
 
     if (isLoading === true && messagesList.length === 0) {
@@ -114,7 +114,7 @@ const ChatBox: React.ForwardRefRenderFunction<ChatRef, ChatProps> = (
                             return (
                                 <LeftChatText
                                     date={message.createdAt}
-                                    name=""
+                                    name={data?.firstName + ' ' + data?.lastName}
                                     url={''}
                                     key={message.uid}
                                     message={message.text}
