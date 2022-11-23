@@ -53,57 +53,57 @@ const RightChatText: React.FC<IRightChatText> = ({ message, files, date }) => {
                     >
                         {files?.length
                             ? files.map((file, index) => {
-                                  return file?.fileType === 'pdf' ||
-                                      file?.fileType === 'doc' ||
-                                      file?.fileType === 'docx' ||
-                                      file?.fileType === 'ppt' ||
-                                      file?.fileType === 'pptx' ? (
-                                      file?.fileType === 'pdf' ? (
-                                          <a
-                                              rel="noreferrer"
-                                              target="_blank"
-                                              href={`${file.url}`}
-                                          >
-                                              <div
-                                                  key={index}
-                                                  className="flex gap-2 justify-start items-start mb-2"
-                                              >
-                                                  <img src={PDF_THUMB} alt="" />
-                                                  {file?.originalFilename}
-                                              </div>
-                                          </a>
-                                      ) : (
-                                          <a
-                                              rel="noreferrer"
-                                              target="_blank"
-                                              href={`${file.url}`}
-                                          >
-                                              <div
-                                                  key={index}
-                                                  className="flex gap-2 justify-start items-start mb-2"
-                                              >
-                                                  <img
-                                                      src={WORD_THUMB}
-                                                      alt=""
-                                                  />
-                                                  {file?.originalFilename}
-                                              </div>
-                                          </a>
-                                      )
-                                  ) : (
-                                      <div
-                                          onClick={() => setOpenLightBox(true)}
-                                          key={index}
-                                          className="w-80 bg-dh-gray-300 rounded-md overflow-hidden"
-                                      >
-                                          <img
-                                              className="object-fill min-w-full min-h-full"
-                                              src={file?.url}
-                                              alt="img"
-                                          />
-                                      </div>
-                                  );
-                              })
+                                return file?.fileType === 'pdf' ||
+                                    file?.fileType === 'doc' ||
+                                    file?.fileType === 'docx' ||
+                                    file?.fileType === 'ppt' ||
+                                    file?.fileType === 'pptx' ? (
+                                    file?.fileType === 'pdf' ? (
+                                        <a
+                                            rel="noreferrer"
+                                            target="_blank"
+                                            href={`${file.url}`}
+                                        >
+                                            <div
+                                                key={index}
+                                                className="flex gap-2 justify-start items-start mb-2"
+                                            >
+                                                <img src={PDF_THUMB} alt="" />
+                                                {file?.originalFilename}
+                                            </div>
+                                        </a>
+                                    ) : (
+                                        <a
+                                            rel="noreferrer"
+                                            target="_blank"
+                                            href={`${file.url}`}
+                                        >
+                                            <div
+                                                key={index}
+                                                className="flex gap-2 justify-start items-start mb-2"
+                                            >
+                                                <img
+                                                    src={WORD_THUMB}
+                                                    alt=""
+                                                />
+                                                {file?.originalFilename}
+                                            </div>
+                                        </a>
+                                    )
+                                ) : (
+                                    <div
+                                        onClick={() => setOpenLightBox(true)}
+                                        key={index}
+                                        className="w-32 max-h-48 bg-dh-gray-300 rounded-md overflow-hidden"
+                                    >
+                                        <img
+                                            className="object-contain min-w-full min-h-full"
+                                            src={file?.url}
+                                            alt="img"
+                                        />
+                                    </div>
+                                );
+                            })
                             : null}
                         {message.length ? (
                             <div ref={messageTextRef}></div>

@@ -21,9 +21,9 @@ const SharedFile = () => {
     const { isLoading, lazyFetch } = useQuery(getAllMessagesByRoomUidQuery, {
         skip:
             receiverUid === undefined ||
-            attachments.results[
+                attachments.results[
                 getUrlParams({ uid: receiverUid, includeOnly: fileTypes })
-            ] !== undefined
+                ] !== undefined
                 ? true
                 : false,
         onQueryEnd: (state) => {
@@ -49,10 +49,10 @@ const SharedFile = () => {
 
     const results =
         attachments.results[
-            getUrlParams({
-                uid: activeMessagehead?.uid || "",
-                includeOnly: fileTypes,
-            })
+        getUrlParams({
+            uid: activeMessagehead?.uid || "",
+            includeOnly: fileTypes,
+        })
         ];
 
     const handleInfiniteScroll = async (skip: number) => {

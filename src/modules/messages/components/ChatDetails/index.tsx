@@ -22,25 +22,23 @@ const ChatDetails = () => {
     };
     return (
         <div className={`${styles.container} flex flex-col flex-shrink-0`}>
-            <NoSSRProfileInfo />
+            {/* <NoSSRProfileInfo /> */}
             <div className="flex px-1 py-2">
                 <button
                     onClick={handleMediaClick}
-                    className={`text-lg font-medium px-5 py-1 w-full ${
-                        tab === 'media'
+                    className={`text-lg font-medium px-5 py-1 w-full ${tab === 'media'
                             ? 'border-dh-green-700 border-b-2 text-dh-green-800'
                             : 'border-dh-gray-300 border-b-2'
-                    }`}
+                        }`}
                 >
                     Photo
                 </button>
                 <button
                     onClick={handleFilesClick}
-                    className={`btext-lg font-medium px-5 py-1 w-full ${
-                        tab === 'files'
+                    className={`btext-lg font-medium px-5 py-1 w-full ${tab === 'files'
                             ? 'border-dh-green-700 border-b-2 text-dh-green-800'
                             : 'border-dh-gray-300 border-b-2'
-                    }`}
+                        }`}
                 >
                     Files
                 </button>
